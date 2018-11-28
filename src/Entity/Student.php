@@ -36,7 +36,7 @@ class Student
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ScheduleLesson", mappedBy="student")
      */
-    private $lessons;
+    private $lessons = [];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Lesson", mappedBy="student")
@@ -90,7 +90,7 @@ class Student
         return $this;
     }
 
-    public function getLessons(): ?array
+    public function getLessons(): Collection
     {
         return $this->lessons;
     }
