@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div id="header">
+        <a href="{{ path('lessonsDueDay') }}" class="link">Today's Lessons</a>
+        <a href="{{ path('show_students') }}" class="link">All Student's</a>
+    </div>
+{% endblock %}

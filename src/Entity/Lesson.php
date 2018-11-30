@@ -17,7 +17,8 @@ class Lesson
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessonsArchive")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessonsArchive", cascade={"persist"})
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
     private $student;
 
@@ -27,22 +28,22 @@ class Lesson
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $homework;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $attendance;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $mark;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $markComment;
 

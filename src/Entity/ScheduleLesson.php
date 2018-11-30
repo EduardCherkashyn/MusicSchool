@@ -17,7 +17,7 @@ class ScheduleLesson
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $dayOfTheWeek;
 
@@ -28,7 +28,8 @@ class ScheduleLesson
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessons")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessons", cascade={"persist"})
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
     private $student;
 

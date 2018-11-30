@@ -34,12 +34,12 @@ class Student
     private $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScheduleLesson", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="App\Entity\ScheduleLesson", mappedBy="student", cascade={"all"}, orphanRemoval=true)
      */
     private $lessons = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lesson", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="App\Entity\Lesson", mappedBy="student",cascade={"all"}, orphanRemoval=true)
      */
     private $lessonsArchive;
 

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Check Lesson{% endblock %}
+{% block body %}
+    <div id="lastRecord">
+    <h1>{{ student.name }}</h1>
+    <h3>Date:</h3>
+    {{ lesson.date|date("m/d/Y")}}
+    <h3>Homework</h3>
+    {{ lesson.homework }}
+    </div>
+    {{ form_start(check_form) }}
+    {{ form_widget(check_form) }}
+    <input type="submit" class="btn-success" value="Submit" name="Submit" />
+    {{ form_end(check_form)}}
+{% endblock %}

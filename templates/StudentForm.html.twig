@@ -10,8 +10,9 @@
          {{ form_row(register_form.name) }}
          {{ form_row(register_form.email) }}
          {{ form_row(register_form.phone) }}
-     <h1>Lessons</h1>
+         <h2>First Lesson:</h2>
          {{ form_row(register_form.lessons.0,{'attr':{'class':'lesson'}}) }}
+         <h2>Second Lesson</h2>
          {{ form_row(register_form.lessons.1,{'attr':{'class':'lesson'}}) }}
      <input type="submit" class="btn-success" value="Submit" name="Submit" />
 {{ form_end(register_form) }}

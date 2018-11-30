@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit Student{% endblock %}
+
+  {% block body %}
+      <div id="header">
+      <h1>{{ student.name }}</h1>
+          <h4>Lesson's:</h4>
+      {%for lesson in student.lessons%}
+          {% if lesson.dayOfTheWeek == 1  %}
+              <h2>Monday</h2>
+          {% elseif lesson.dayOfTheWeek == 2  %}
+              <h2>Tuesday</h2>
+          {% elseif lesson.dayOfTheWeek == 3  %}
+              <h2>Wednesday</h2>
+          {% elseif lesson.dayOfTheWeek == 4  %}
+              <h2>Thursday</h2>
+          {% elseif lesson.dayOfTheWeek == 5  %}
+              <h2>Friday</h2>
+          {% elseif lesson.dayOfTheWeek == 6  %}
+              <h2>Saturday</h2>
+          {% endif %}
+          {{ lesson.time|date('H:i') }}
+      {% endfor %}
+      </div>
+      <a href="{{ path('student_score',({'id':student.id})) }}" class="delete-btn">Student's Scores</a>
+
+      <div id="studInfo">
+          <h2>Student's email:</h2>
+          {{ student.email }}
+          <h2>Sudent's phone number: </h2>
+          {{ student.phone }}
+      </div>
+
+      {{form_start(edit_form)}}
+      {{ form_row(edit_form.email) }}
+      {{ form_row(edit_form.phone) }}
+      <h2>First Lesson:</h2>
+      {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
+      <h2>Second Lesson</h2>
+      {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
+      <input type="submit" class="btn-success" value="Edit info" name="Submit" />
+      <a href="{{ path('delete_student',({'id':student.id})) }}" class="delete-btn">Delete Student</a>
+      {{ form_end(edit_form) }}
+  {% endblock %}
