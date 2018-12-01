@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}List of Students{% endblock %}
+
+{% block body %}
+    {% block header %}
+        <div id="header">
+        <a href="{{ path('add_student') }}" class="link">New Student</a>
+        </div>
+    {% endblock %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Lesson One</th>
+            <th>Time</th>
+            <th>Lesson Two </th>
+            <th>Time</th>
+        </tr>
+        {% for student in students %}
+            <tr>
+                <td><a href="{{path('edit_student',({'id':student.id}))}}">{{ student.name }}</a></td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.phone}}</td>
+                {% for lesson in student.lessons %}
+                {% if lesson.dayOfTheWeek == 1  %}
+                <td>Monday</td>
+                {% elseif lesson.dayOfTheWeek == 2  %}
+                    <td>Tuesday</td>
+                {% elseif lesson.dayOfTheWeek == 3  %}
+                    <td>Wednesday</td>
+                {% elseif lesson.dayOfTheWeek == 4  %}
+                    <td>Thursday</td>
+                {% elseif lesson.dayOfTheWeek == 5  %}
+                    <td>Friday</td>
+                {% elseif lesson.dayOfTheWeek == 6  %}
+                    <td>Saturday</td>
+                {% endif %}
+
+                <td>{{lesson.time|date('H:i') }}</td>
+                {% endfor %}
+
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

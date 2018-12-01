@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}Today's Schedule{% endblock %}
+{% block body %}
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Name</th>
+            <th>Give Homework</th>
+            <th>Check Homework</th>
+        </tr>
+        {% for lesson in lesssons %}
+        <tr>
+            {% if lesson.dayOfTheWeek == 1  %}
+                <td>Monday</td>
+            {% elseif lesson.dayOfTheWeek == 2  %}
+                <td>Tuesday</td>
+            {% elseif lesson.dayOfTheWeek == 3  %}
+                <td>Wednesday</td>
+            {% elseif lesson.dayOfTheWeek == 4  %}
+                <td>Thursday</td>
+            {% elseif lesson.dayOfTheWeek == 5  %}
+                <td>Friday</td>
+            {% elseif lesson.dayOfTheWeek == 6  %}
+                <td>Saturday</td>
+            {% endif %}
+            <td>{{ lesson.time|date('H:i') }}</td>
+            <td>{{ lesson.student.name }}</td>
+            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="link">Give Homework</a></td>
+            <td><a href="{{path('check_Lesson',({'id':lesson.student.id}))}}" class="link">Check Homework</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
