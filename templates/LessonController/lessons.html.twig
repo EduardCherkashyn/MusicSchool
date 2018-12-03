@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}Today's Schedule{% endblock %}
 {% block body %}
-    <table>
+    <div class="container">
+    <table  class="table table-hover">
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
         <tr>
             <th>Day</th>
             <th>Time</th>
@@ -26,9 +32,10 @@
             {% endif %}
             <td>{{ lesson.time|date('H:i') }}</td>
             <td>{{ lesson.student.name }}</td>
-            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="link">Give Homework</a></td>
-            <td><a href="{{path('check_Lesson',({'id':lesson.student.id}))}}" class="link">Check Homework</a></td>
+            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Give Homework</a></td>
+            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Check Homework</a></td>
         </tr>
         {% endfor %}
     </table>
+    </div>
 {% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit Student{% endblock %}
+
+  {% block body %}
+      <div class="container">
+          <ul class="list-group">
+              <li class="list-group-item"> <h1>{{ student.name }}</h1></li>
+              <li class="list-group-item"> <h4>Lesson's:</h4></li>
+      {%for lesson in student.lessons%}
+          {% if lesson.dayOfTheWeek == 1  %}
+              <li class="list-group-item"> <h2>Monday</h2></li>
+          {% elseif lesson.dayOfTheWeek == 2  %}
+              <li class="list-group-item"> <h2>Tuesday</h2></li>
+          {% elseif lesson.dayOfTheWeek == 3  %}
+              <li class="list-group-item"> <h2>Wednesday</h2></li>
+          {% elseif lesson.dayOfTheWeek == 4  %}
+              <li class="list-group-item"> <h2>Thursday</h2></li>
+          {% elseif lesson.dayOfTheWeek == 5  %}
+              <li class="list-group-item"> <h2>Friday</h2></li>
+          {% elseif lesson.dayOfTheWeek == 6  %}
+              <li class="list-group-item"> <h2>Saturday</h2></li>
+          {% endif %}
+              <li class="list-group-item">{{ lesson.time|date('H:i') }}</li>
+      {% endfor %}
+
+              <li class="list-group-item"><a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Student's Scores</a></li>
+              <li class="list-group-item"> <h2>Student's email:</h2></li>
+              <li class="list-group-item"> {{ student.email }}</li>
+              <li class="list-group-item"> <h2>Sudent's phone number: </h2></li>
+              <li class="list-group-item"> {{ student.phone }}</li>
+      </ul>
+      </br>
+          <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Press to edit Student  info
+          </button>
+      <div class="collapse" id="collapseExample">
+      {{form_start(edit_form)}}
+      {{ form_row(edit_form.email) }}
+      {{ form_row(edit_form.phone) }}
+      <h2>First Lesson:</h2>
+      {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
+      <h2>Second Lesson</h2>
+      {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
+      <input type="submit" class="btn btn-success"a value="Edit info" name="Submit" />
+      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger">Delete Student</a>
+      {{ form_end(edit_form) }}
+      </div>
+      </div>
+  {% endblock %}

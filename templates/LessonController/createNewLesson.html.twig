@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block title %}New Lesson{% endblock %}
 {% block body %}
-   <h1>{{ student.name }}</h1>
+    <div class="container">
+    <h1>Student's name:  {{ student.name }}</h1>
 {{ form_start(create_lesson) }}
    {{ form_widget(create_lesson) }}
     <input type="submit" class="btn-success" value="Submit" name="Submit" />
     {{ form_end(create_lesson) }}
+    </div>
 {% endblock %}

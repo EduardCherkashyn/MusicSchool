@@ -15,12 +15,14 @@ use App\Form\StudentType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 class StudentController extends AbstractController
 {
 
     /**
-     * @Route("/newStudent", name="add_student")
+     * @Route("/newStudent", name="addStudent")
      */
     public function addAction(Request $request)
     {
@@ -37,7 +39,7 @@ class StudentController extends AbstractController
             $em->persist($lesson);
             $em->flush();
         }
-        return $this->render('StudentForm.html.twig',[
+        return $this->render('StudentController/StudentForm.html.twig',[
             'register_form'=>$form->createView(),
 
         ]);
@@ -45,32 +47,22 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/delete", name="delete_student")
+     * @Route("/delete/{id}", name="deleteStudent")
      */
-    public function deleteAction()
+    public function deleteAction(Student $student)
     {
-        $repository = $this->getDoctrine()->getRepository(Student::class);
-        /**
-         * @var Student $student
-         */
-        $student = $repository->findOneBy(['id'=>$_GET['id']]);
         $em = $this->getDoctrine()->getManager();
         $em->remove($student);
         $em->flush();
 
-        return $this->redirectToRoute('show_students');
+        return $this->redirectToRoute('showStudents');
     }
 
     /**
-     * @Route("/edit", name="edit_student")
+     * @Route("/edit/{id}", name="editStudent")
      */
-    public function editAction(Request $request)
+    public function editAction(Student $student, Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Student::class);
-        /**
-         * @var Student $student
-         */
-        $student = $repository->findOneBy(['id'=>$_GET['id']]);
         $form = $this->createForm(StudentEditByNameType::class,$student);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
@@ -78,24 +70,24 @@ class StudentController extends AbstractController
             $em->persist($student);
             $em->flush();
 
-            return $this->redirectToRoute('show_students');
+            return $this->redirectToRoute('showStudents');
         }
 
-        return $this->render('EditStudentForm.html.twig',[
+        return $this->render('StudentController/EditStudentForm.html.twig',[
             'edit_form' => $form->createView(),
             'student' => $student
         ]);
     }
 
     /**
-     * @Route("/showAll", name="show_students")
+     * @Route("/showAll", name="showStudents")
      */
     public function showAllAction()
     {
         $repository = $this->getDoctrine()->getRepository(Student::class);
         $students = $repository->findAll();
 
-        return $this->render('showAllStudents.html.twig',[
+        return $this->render('StudentController/showAllStudents.html.twig',[
           'students' => $students
         ]);
     }
@@ -105,21 +97,16 @@ class StudentController extends AbstractController
      */
     public function indexAction()
     {
-        return $this->render('indexAction.html.twig');
+        return $this->render('StudentController/indexAction.html.twig');
     }
 
     /**
-     * @Route("/student_results", name="student_score")
+     * @Route("/student_results/{id}", name="studentScore")
      */
-    public function resultsAction()
+    public function resultsAction(Student $student)
     {
-        $repository = $this->getDoctrine()->getRepository(Student::class);
-        /**
-         * @var Student $student
-         */
-        $student = $repository->findOneBy(['id'=>$_GET['id']]);
 
-        return $this->render('studentResults.html.twig',[
+        return $this->render('StudentController/studentResults.html.twig',[
             'student' => $student
         ]);
     }

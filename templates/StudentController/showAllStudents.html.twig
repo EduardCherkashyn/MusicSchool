@@ -3,11 +3,10 @@
 
 {% block body %}
     {% block header %}
-        <div id="header">
-        <a href="{{ path('add_student') }}" class="link">New Student</a>
-        </div>
+        <div class="container" >
+        <a href="{{ path('addStudent') }}" class="btn btn-primary btn-lg btn-block" role="button">New Student</a>
     {% endblock %}
-    <table>
+    <table class="table table-hover">
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -19,7 +18,7 @@
         </tr>
         {% for student in students %}
             <tr>
-                <td><a href="{{path('edit_student',({'id':student.id}))}}">{{ student.name }}</a></td>
+                <td><a href="{{path('editStudent',({'id':student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">{{ student.name }}</a></td>
                 <td>{{ student.email }}</td>
                 <td>{{ student.phone}}</td>
                 {% for lesson in student.lessons %}
@@ -43,5 +42,5 @@
             </tr>
         {% endfor %}
     </table>
-
+    </div>
 {% endblock %}
