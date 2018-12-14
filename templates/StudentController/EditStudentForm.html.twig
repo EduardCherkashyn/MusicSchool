@@ -23,7 +23,7 @@
               <li class="list-group-item">{{ lesson.time|date('H:i') }}</li>
       {% endfor %}
 
-              <li class="list-group-item"><a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Student's Scores</a></li>
+              <li class="list-group-item"><a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Student's Scores <i class="fas fa-award"></i></a></li>
               <li class="list-group-item"> <h2>Student's email:</h2></li>
               <li class="list-group-item"> {{ student.email }}</li>
               <li class="list-group-item"> <h2>Sudent's phone number: </h2></li>
@@ -31,7 +31,7 @@
       </ul>
       </br>
           <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Press to edit Student  info
+              Press to edit Student  info     <i class="fas fa-hand-point-up"></i>
           </button>
       <div class="collapse" id="collapseExample">
       {{form_start(edit_form)}}
@@ -41,8 +41,8 @@
       {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
       <h2>Second Lesson</h2>
       {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
-      <input type="submit" class="btn btn-success"a value="Edit info" name="Submit" />
-      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger">Delete Student</a>
+          <button type="submit" class="btn btn-success" value="Edit info" name="Submit">Edit Student <i class="fas fa-user-edit"></i></button>
+      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger">Delete Student <i class="fas fa-trash"></i></a>
       {{ form_end(edit_form) }}
       </div>
       </div>

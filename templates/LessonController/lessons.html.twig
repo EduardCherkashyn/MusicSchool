@@ -32,8 +32,8 @@
             {% endif %}
             <td>{{ lesson.time|date('H:i') }}</td>
             <td>{{ lesson.student.name }}</td>
-            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Give Homework</a></td>
-            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Check Homework</a></td>
+            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Give Homework <i class="fas fa-book-open"></i></a></td>
+            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Check Homework <i class="fas fa-check"></i></a></td>
         </tr>
         {% endfor %}
     </table>

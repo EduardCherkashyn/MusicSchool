@@ -80,7 +80,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/showAll", name="showStudents")
+     * @Route("", name="showStudents")
      */
     public function showAllAction()
     {
@@ -90,14 +90,6 @@ class StudentController extends AbstractController
         return $this->render('StudentController/showAllStudents.html.twig',[
           'students' => $students
         ]);
-    }
-
-    /**
-     * @Route("/index", name="indexAction")
-     */
-    public function indexAction()
-    {
-        return $this->render('StudentController/indexAction.html.twig');
     }
 
     /**
