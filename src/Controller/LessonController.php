@@ -18,6 +18,8 @@ use App\Services\SortingByDay;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 class LessonController extends AbstractController
 {
@@ -30,26 +32,20 @@ class LessonController extends AbstractController
         $lessons = $repository->findBy(['dayOfTheWeek' => date('w')]);
         $sortedLessonsByDay = SortingByDay::indexAction($lessons);
 
-        return $this->render('lessons.html.twig',[
+        return $this->render('LessonController/lessons.html.twig',[
             'lesssons' => $sortedLessonsByDay
         ]);
     }
 
     /**
-     * @Route("/newLesson", name="createLesson")
+     * @Route("/newLesson/{id}", name="createLesson")
      */
-    public function newlessonAction(Request $request)
+    public function newLessonAction(Student $student,Request $request)
     {
         $lesson = new Lesson();
-        $repository = $this->getDoctrine()->getRepository(Student::class);
-        /**
-         * @var Student $student
-         */
-        $student = $repository->findOneBy(['id'=>$_GET['id']]);
         $form = $this->createForm(NewLessonType::class,$lesson);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $student->addLessonsArchive($lesson);
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
@@ -60,7 +56,7 @@ class LessonController extends AbstractController
 
         }
 
-        return $this->render('createNewLesson.html.twig',[
+        return $this->render('LessonController/createNewLesson.html.twig',[
             'create_lesson' => $form->createView(),
             'student' => $student
         ]);
@@ -68,25 +64,30 @@ class LessonController extends AbstractController
 
 
     /**
-     * @Route("/checkLesson", name="check_Lesson")
+     * @Route("/checkLesson/{id}", name="checkLesson")
      */
-    public function checkLesson(Request $request)
+    public function checkLesson(Request $request,Student $student)
     {
-        $repository = $this->getDoctrine()->getRepository(Student::class);
-        /**
-         * @var Student $student
-         */
-        $student = $repository->findOneBy(['id'=>$_GET['id']]);
         $lessons = $student->getLessonsArchive();
-        if (!$lessons->isEmpty())
-        {
+        if (!$lessons->isEmpty()) {
             /**
              * @var Lesson $lesson
              */
-            $lesson =  $lessons->last();
+            $lesson = $lessons->last();
+        }else{
+            $lesson=null;
+            $this->addFlash(
+                'notice',
+                'The lesson have not been created yet !'
+            );
+            return $this->redirectToRoute('lessonsDueDay');
         }
+
         if($lesson->getMark()!==null){
-            throw new \Exception('Lesson is not created');
+            $this->addFlash(
+                'notice',
+                'The lesson have not been created yet !'
+            );
             return $this->redirectToRoute('lessonsDueDay');
         }
         $form = $this->createForm(CheckLessonType::class,$lesson);
@@ -100,11 +101,12 @@ class LessonController extends AbstractController
 
         }
 
-        return $this->render('checkLesson.html.twig',[
+        return $this->render('LessonController/checkLesson.html.twig',[
             'check_form' => $form->createView(),
             'student' => $student,
             'lesson' => $lesson
         ]);
-    }
 
+
+}
 }

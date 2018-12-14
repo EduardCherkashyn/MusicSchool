@@ -15,7 +15,9 @@ class CheckLessonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('attendance',CheckboxType::class)
+            ->add('attendance',CheckboxType::class,[
+                'required' => false
+            ])
             ->add('mark',IntegerType::class,[
                 'attr' => [
                     'min' => 1,
