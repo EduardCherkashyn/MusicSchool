@@ -26,11 +26,11 @@ class LessonController extends AbstractController
     /**
      * @Route("/listOfLessons", name="lessonsDueDay")
      */
-    public function lessonsAction()
+    public function lessonsAction(SortingByDay $sortingByDay)
     {
         $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
         $lessons = $repository->findBy(['dayOfTheWeek' => date('w')]);
-        $sortedLessonsByDay = SortingByDay::indexAction($lessons);
+        $sortedLessonsByDay = $sortingByDay->indexAction($lessons);
 
         return $this->render('LessonController/lessons.html.twig',[
             'lesssons' => $sortedLessonsByDay

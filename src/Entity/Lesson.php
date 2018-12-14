@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LessonRepository")
@@ -23,11 +25,19 @@ class Lesson
     private $student;
 
     /**
+     * @Assert\DateTime
+     * @var string A "Y-m-d" formatted value
      * @ORM\Column(type="date")
      */
     private $date;
 
     /**
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 300,
+     *      minMessage = "Your text be at least {{ limit }} characters long",
+     *      maxMessage = "Your text cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="text")
      */
     private $homework;
@@ -38,11 +48,21 @@ class Lesson
     private $attendance;
 
     /**
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $mark;
 
     /**
+     * @Assert\Length(
+     *      min = 20,
+     *      max = 250,
+     *      minMessage = "Your comment must be at least {{ limit }} characters long",
+     *      maxMessage = "Your comment cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="text", nullable=true)
      */
     private $markComment;

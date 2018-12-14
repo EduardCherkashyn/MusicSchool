@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CheduleLessonRepository")
@@ -22,6 +24,8 @@ class ScheduleLesson
     private $dayOfTheWeek;
 
     /**
+     * @Assert\DateTime
+     * @var string A "H:i:s" formatted value
      * @ORM\Column(type="time")
      */
     private $time;

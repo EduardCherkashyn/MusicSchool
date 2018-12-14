@@ -13,7 +13,7 @@ use App\Entity\ScheduleLesson;
 
 class SortingByDay
 {
-    public static function indexAction(array $lessons)
+    public function indexAction(array $lessons)
     {
         usort($lessons, function(ScheduleLesson $a, ScheduleLesson $b) {
             return $a->getTime()->format('U') - $b->getTime()->format('U');

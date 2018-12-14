@@ -38,6 +38,8 @@ class StudentController extends AbstractController
             $em->persist($student);
             $em->persist($lesson);
             $em->flush();
+
+            return $this->redirectToRoute('showStudents');
         }
         return $this->render('StudentController/StudentForm.html.twig',[
             'register_form'=>$form->createView(),
