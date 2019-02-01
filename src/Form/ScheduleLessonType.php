@@ -14,7 +14,7 @@ class ScheduleLessonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dayOfTheWeek',ChoiceType::class,[
+            ->add('dayOfTheWeek', ChoiceType::class, [
                 'choices' => [
                   'Monday' => 1,
                   'Tuesday' => 2,
@@ -23,7 +23,7 @@ class ScheduleLessonType extends AbstractType
                   'Friday' => 5,
                   'Saturday' => 6
             ]])
-            ->add('time',TimeType::class)
+            ->add('time', TimeType::class)
         ;
     }
 

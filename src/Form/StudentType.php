@@ -15,10 +15,13 @@ class StudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
-            ->add('email',EmailType::class)
-            ->add('phone',TextType::class)
-            ->add('lessons',CollectionType::class,[
+            ->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('phone', TextType::class)
+            ->add(
+                'lessons',
+                CollectionType::class,
+                [
                     'entry_type' => ScheduleLessonType::class,
                     'entry_options' => array('label' => false),
                 ]

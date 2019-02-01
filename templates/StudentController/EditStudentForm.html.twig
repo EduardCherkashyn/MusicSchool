@@ -41,8 +41,8 @@
       {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
       <h2>Second Lesson</h2>
       {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
-          <button type="submit" class="btn btn-success" value="Edit info" name="Submit">Edit Student <i class="fas fa-user-edit"></i></button>
-      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger">Delete Student <i class="fas fa-trash"></i></a>
+          <button type="submit" class="btn btn-success" value="Edit info" name="Submit" onclick="return confirm('Are u sure?')">Edit Student <i class="fas fa-user-edit"></i></button>
+      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger" onclick="return confirm('Are u sure?')">Delete Student <i class="fas fa-trash"></i></a>
       {{ form_end(edit_form) }}
       </div>
       </div>

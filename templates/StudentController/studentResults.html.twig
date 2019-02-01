@@ -8,6 +8,7 @@
             <th>Homework</th>
             <th>Mark</th>
             <th>Comments</th>
+            <th>Attendance</th>
         </tr>
 {%for lesson in student.lessonsArchive %}
     <tr>
@@ -15,7 +16,11 @@
         <td>{{ lesson.homework }}</td>
         <td>{{ lesson.mark }}</td>
         <td>{{ lesson.markComment}}</td>
-        <td>
+        {%if lesson.attendance is null%}
+            <td>N</td>
+        {% else %}
+            <td>Y</td>
+            {% endif %}
     </tr>
 {% endfor %}
     </table>

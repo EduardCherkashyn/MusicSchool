@@ -15,7 +15,10 @@ class StudentEditByNameType extends AbstractType
         $builder
             ->add('email')
             ->add('phone')
-            ->add('lessons',CollectionType::class,[
+            ->add(
+                'lessons',
+                CollectionType::class,
+                [
                     'entry_type' => ScheduleLessonType::class,
                     'entry_options' => array('label' => false),
                 ]

@@ -15,8 +15,6 @@ use App\Form\StudentType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
 
 class StudentController extends AbstractController
 {
@@ -31,9 +29,9 @@ class StudentController extends AbstractController
         $lesson2 = new ScheduleLesson();
         $student->addLesson($lesson);
         $student->addLesson($lesson2);
-        $form = $this->createForm(StudentType::class,$student);
+        $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->persist($lesson);
@@ -41,11 +39,10 @@ class StudentController extends AbstractController
 
             return $this->redirectToRoute('showStudents');
         }
-        return $this->render('StudentController/StudentForm.html.twig',[
+        return $this->render('StudentController/StudentForm.html.twig', [
             'register_form'=>$form->createView(),
 
         ]);
-
     }
 
     /**
@@ -65,9 +62,9 @@ class StudentController extends AbstractController
      */
     public function editAction(Student $student, Request $request)
     {
-        $form = $this->createForm(StudentEditByNameType::class,$student);
+        $form = $this->createForm(StudentEditByNameType::class, $student);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->flush();
@@ -75,7 +72,7 @@ class StudentController extends AbstractController
             return $this->redirectToRoute('showStudents');
         }
 
-        return $this->render('StudentController/EditStudentForm.html.twig',[
+        return $this->render('StudentController/EditStudentForm.html.twig', [
             'edit_form' => $form->createView(),
             'student' => $student
         ]);
@@ -89,7 +86,7 @@ class StudentController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Student::class);
         $students = $repository->findAll();
 
-        return $this->render('StudentController/showAllStudents.html.twig',[
+        return $this->render('StudentController/showAllStudents.html.twig', [
           'students' => $students
         ]);
     }
@@ -99,11 +96,8 @@ class StudentController extends AbstractController
      */
     public function resultsAction(Student $student)
     {
-
-        return $this->render('StudentController/studentResults.html.twig',[
+        return $this->render('StudentController/studentResults.html.twig', [
             'student' => $student
         ]);
     }
-
-
 }
