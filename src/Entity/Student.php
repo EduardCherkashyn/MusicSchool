@@ -48,6 +48,12 @@ class Student
      */
     private $lessonsArchive;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File
+     */
+    private $avatar;
+
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
@@ -157,6 +163,18 @@ class Student
                 $lessonsArchive->setStudent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

@@ -3,47 +3,24 @@
 
   {% block body %}
       <div class="container">
-          <ul class="list-group">
-              <li class="list-group-item"> <h1>{{ student.name }}</h1></li>
-              <li class="list-group-item"> <h4>Lesson's:</h4></li>
-      {%for lesson in student.lessons%}
-          {% if lesson.dayOfTheWeek == 1  %}
-              <li class="list-group-item"> <h2>Monday</h2></li>
-          {% elseif lesson.dayOfTheWeek == 2  %}
-              <li class="list-group-item"> <h2>Tuesday</h2></li>
-          {% elseif lesson.dayOfTheWeek == 3  %}
-              <li class="list-group-item"> <h2>Wednesday</h2></li>
-          {% elseif lesson.dayOfTheWeek == 4  %}
-              <li class="list-group-item"> <h2>Thursday</h2></li>
-          {% elseif lesson.dayOfTheWeek == 5  %}
-              <li class="list-group-item"> <h2>Friday</h2></li>
-          {% elseif lesson.dayOfTheWeek == 6  %}
-              <li class="list-group-item"> <h2>Saturday</h2></li>
-          {% endif %}
-              <li class="list-group-item">{{ lesson.time|date('H:i') }}</li>
-      {% endfor %}
-
-              <li class="list-group-item"><a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Student's Scores <i class="fas fa-award"></i></a></li>
-              <li class="list-group-item"> <h2>Student's email:</h2></li>
-              <li class="list-group-item"> {{ student.email }}</li>
-              <li class="list-group-item"> <h2>Sudent's phone number: </h2></li>
-              <li class="list-group-item"> {{ student.phone }}</li>
-      </ul>
+          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Student's Scores <i class="fas fa-award"></i></a>
       </br>
-          <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Press to edit Student  info     <i class="fas fa-hand-point-up"></i>
-          </button>
-      <div class="collapse" id="collapseExample">
+          {% if student.avatar is null%}
+                <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+          {% else %}
+                <img src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
+          {% endif %}
       {{form_start(edit_form)}}
-      {{ form_row(edit_form.email) }}
+          {{ form_row(edit_form.name) }}
+          {{ form_row(edit_form.email) }}
       {{ form_row(edit_form.phone) }}
-      <h2>First Lesson:</h2>
+          {{ form_row(edit_form.avatar) }}
+          <h2>First Lesson:</h2>
       {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
       <h2>Second Lesson</h2>
       {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
           <button type="submit" class="btn btn-success" value="Edit info" name="Submit" onclick="return confirm('Are u sure?')">Edit Student <i class="fas fa-user-edit"></i></button>
       <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger" onclick="return confirm('Are u sure?')">Delete Student <i class="fas fa-trash"></i></a>
       {{ form_end(edit_form) }}
-      </div>
       </div>
   {% endblock %}

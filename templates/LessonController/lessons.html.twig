@@ -11,6 +11,7 @@
         <tr>
             <th>Day</th>
             <th>Time</th>
+            <th>Avatar</th>
             <th>Name</th>
             <th>Give Homework</th>
             <th>Check Homework</th>
@@ -31,6 +32,12 @@
                 <td>Saturday</td>
             {% endif %}
             <td>{{ lesson.time|date('H:i') }}</td>
+            {% if lesson.student.avatar is null%}
+                <td><img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px"></td>
+            {% else %}
+                <td><img src="{{ asset('avatars/' ~ lesson.student.avatar) }}" alt="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" ></td>
+            {% endif %}
+            <td>{{ lesson.student.avatar }}</td>
             <td>{{ lesson.student.name }}</td>
             <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Give Homework <i class="fas fa-book-open"></i></a></td>
             <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Check Homework <i class="fas fa-check"></i></a></td>

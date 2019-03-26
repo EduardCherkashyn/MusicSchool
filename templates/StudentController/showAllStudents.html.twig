@@ -5,6 +5,7 @@
     <div class="container" >
     <table class="table table-hover">
         <tr>
+            <th>Avatar</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -14,8 +15,21 @@
             <th>Time</th>
         </tr>
         {% for student in students %}
-            <tr>
-                <td><a href="{{path('editStudent',({'id':student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">{{ student.name }} <i class="fas fa-user"></i></a></td>
+               <tr>
+                   {% if student.avatar is null%}
+                    <td>
+                        <a href="{{path('editStudent',({'id':student.id}))}}">
+                        <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+                        </a>
+                    </td>
+                {% else %}
+                 <td>
+                     <a href="{{path('editStudent',({'id':student.id}))}}">
+                     <img src="{{ asset('avatars/' ~ student.avatar) }}" alt="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+                     </a>
+                 </td>
+                {% endif %}
+                <td>{{ student.name }}</td>
                 <td>{{ student.email }}</td>
                 <td>{{ student.phone}}</td>
                 {% for lesson in student.lessons %}
@@ -35,8 +49,8 @@
 
                 <td>{{lesson.time|date('H:i') }}</td>
                 {% endfor %}
-
             </tr>
+
         {% endfor %}
     </table>
     </div>

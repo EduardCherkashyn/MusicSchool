@@ -12,6 +12,11 @@ use App\Entity\Student;
 use App\Entity\ScheduleLesson;
 use App\Form\StudentEditByNameType;
 use App\Form\StudentType;
+use App\Services\FileUploader;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +27,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/newStudent", name="addStudent")
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, FileUploader $fileUploader)
     {
         $student = new Student();
         $lesson = new ScheduleLesson();
@@ -32,6 +37,12 @@ class StudentController extends AbstractController
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $request->files->get('student')['avatar'];
+            $fileName = $fileUploader->upload($file);
+            $student->setAvatar($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->persist($lesson);
@@ -60,21 +71,43 @@ class StudentController extends AbstractController
     /**
      * @Route("/edit/{id}", name="editStudent")
      */
-    public function editAction(Student $student, Request $request)
+    public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container)
     {
-        $form = $this->createForm(StudentEditByNameType::class, $student);
+        $avatar = $student->getAvatar();
+        if($avatar != null) {
+            $student->setAvatar(
+                new File($this->getParameter('avatars_directory') .'/'.$avatar)
+            );
+        }
+        $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $request->files->get('student')['avatar'];
+            if($file !== null) {
+                $fileName = $fileUploader->upload($file);
+                $student->setAvatar($fileName);
+                $root = $container->get('kernel')->getProjectDir();
+                if($avatar != null) {
+                    $filesystem->remove($root . '/public/avatars/' . $avatar);
+                }
+            }
+            else{
+                $student->setAvatar($avatar);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->flush();
 
-            return $this->redirectToRoute('showStudents');
+            return $this->redirectToRoute('editStudent',['id'=>$student->getId()]);
         }
 
         return $this->render('StudentController/EditStudentForm.html.twig', [
             'edit_form' => $form->createView(),
-            'student' => $student
+            'student' => $student,
+            'avatar' => $avatar
         ]);
     }
 

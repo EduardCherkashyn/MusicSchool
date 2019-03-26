@@ -78,7 +78,7 @@ class LessonController extends AbstractController
     public function checkLesson(Request $request, Student $student, LessonCheck $lessonCheck)
     {
         $lesson = $lessonCheck->beforePutMark($student);
-        if ($lesson->getMark() !== null && $lesson !==null) {
+        if($lesson == null || $lesson->getMark() !== null) {
             $this->addFlash(
                     'notice',
                     'The lesson have not been created yet !'
