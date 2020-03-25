@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use App\Entity\ScheduleLesson;
+use App\Entity\User;
 use App\Form\StudentType;
 use App\Services\FileUploader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -19,14 +20,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class StudentController extends AbstractController
 {
 
     /**
-     * @Route("/newStudent", name="addStudent")
+     * @Route("/admin/newStudent", name="addStudent")
      */
-    public function addAction(Request $request, FileUploader $fileUploader)
+    public function addAction(Request $request, FileUploader $fileUploader,UserPasswordEncoderInterface $passwordEncoder)
     {
         $student = new Student();
         $lesson = new ScheduleLesson();
@@ -42,6 +44,9 @@ class StudentController extends AbstractController
             $file = $request->files->get('student')['avatar'];
             $fileName = $fileUploader->upload($file);
             $student->setAvatar($fileName);
+            $user = new User();
+            $user->setEmail($student->getEmail());
+            $user->setPassword($passwordEncoder->encodePassword($user,$student->getPhone()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->persist($lesson);
@@ -56,7 +61,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="deleteStudent")
+     * @Route("/admin/delete/{id}", name="deleteStudent")
      */
     public function deleteAction(Student $student)
     {
@@ -68,7 +73,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="editStudent")
+     * @Route("/admin/edit/{id}", name="editStudent")
      */
     public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container)
     {
@@ -111,7 +116,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("", name="showStudents")
+     * @Route("/admin", name="showStudents")
      */
     public function showAllAction()
     {
@@ -124,12 +129,22 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/student_results/{id}", name="studentScore")
+     * @Route("/admin/student_results/{id}", name="studentScore")
      */
     public function resultsAction(Student $student)
     {
         return $this->render('StudentController/studentResults.html.twig', [
             'student' => $student
+        ]);
+    }
+
+    /**
+     * @Route("/profile", name="studentProfile")
+     */
+    public function profileAction()
+    {
+        return $this->render('StudentController/profile.html.twig', [
+            'student' => $this->getUser()->getStudent()
         ]);
     }
 }

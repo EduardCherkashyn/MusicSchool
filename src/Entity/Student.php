@@ -22,7 +22,7 @@ class Student
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Length(min="3", max="15")
+     * @Assert\Length(min="3", max="35")
      */
     private $name;
 
