@@ -39,6 +39,11 @@
                     </div>
                 </li>
                 {% endif %}
+                {% if is_granted("ROLE_USER") %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Log out</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

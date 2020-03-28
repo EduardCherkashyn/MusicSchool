@@ -1,1 +1,37 @@
 {% extends 'base.html.twig' %}
+{% block title %}My Profile{% endblock %}
+{% block body %}
+    <div class="container d-flex">
+        <div>
+        {% if student.avatar is null%}
+            <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+        {% else %}
+            <img src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
+        {% endif %}
+        </div>
+        <div class="ml-3">
+            <h1>{{ student.name }}</h1>
+            Email:{{ student.email }}<br>
+            Phone:{{ student.phone }}<br>
+
+            <h2>Время уроков:</h2>
+            {% for lesson in student.lessons %}
+                {% if lesson.dayOfTheWeek == 1  %}
+                    Monday
+                {% elseif lesson.dayOfTheWeek == 2  %}
+                    Tuesday
+                {% elseif lesson.dayOfTheWeek == 3  %}
+                    Wednesday
+                {% elseif lesson.dayOfTheWeek == 4  %}
+                    Thursday
+                {% elseif lesson.dayOfTheWeek == 5  %}
+                    Friday
+                {% elseif lesson.dayOfTheWeek == 6  %}
+                    Saturday
+                {% endif %}
+                {{ lesson.time|date('H:i')}}
+        <br>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
