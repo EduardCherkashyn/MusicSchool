@@ -16,12 +16,19 @@ class StudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('avatar',FileType::class,[
-                'required' => false
+            ->add('name', TextType::class, [
+                'label' => 'Имя'
             ])
-            ->add('email', EmailType::class)
-            ->add('phone', TextType::class)
+            ->add('avatar',FileType::class,[
+                'required' => false,
+                'label' => 'Аватар'
+            ])
+            ->add('email', EmailType::class,[
+                'label'=> 'Имейл'
+            ])
+            ->add('phone', TextType::class,[
+                'label' => 'Телефон'
+            ])
             ->add(
                 'lessons',
                 CollectionType::class,

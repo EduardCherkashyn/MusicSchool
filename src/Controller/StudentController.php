@@ -8,19 +8,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Lesson;
 use App\Entity\Student;
 use App\Entity\ScheduleLesson;
 use App\Entity\User;
 use App\Form\StudentType;
 use App\Services\FileUploader;
+use App\Services\UrlParser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
+
 
 class StudentController extends AbstractController
 {
@@ -47,7 +52,9 @@ class StudentController extends AbstractController
             $user = new User();
             $user->setEmail($student->getEmail());
             $user->setPassword($passwordEncoder->encodePassword($user,$student->getPhone()));
+            $user->setStudent($student);
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->persist($student);
             $em->persist($lesson);
             $em->flush();
@@ -141,10 +148,32 @@ class StudentController extends AbstractController
     /**
      * @Route("/profile", name="studentProfile")
      */
-    public function profileAction()
+    public function profileAction(UrlParser $parser)
     {
+        $parser->parse($this->getUser()->getStudent());
+
         return $this->render('StudentController/profile.html.twig', [
             'student' => $this->getUser()->getStudent()
         ]);
+    }
+
+    /**
+     * @Route("/video_upload", name="videoUpload")
+     */
+    public function videoUploadAction(Request $request)
+    {
+        if($this->getDoctrine()->getRepository(Lesson::class)->findOneBy(['youtubeLink'=>$request->get('data')])){
+            return new JsonResponse('',404);
+        }
+        $lesson = $this->getDoctrine()->getRepository(Lesson::class)->findOneBy(['id'=> $request->get('id')]);
+        $lesson->setYoutubeLink($request->get('data'));
+        $this->getDoctrine()->getManager()->persist($lesson);
+        $this->getDoctrine()->getManager()->flush();
+        $vsm = new VideoServiceMatcher();
+        $video = $vsm->parse($lesson->getYoutubeLink());
+        $link = $video->getEmbedUrl();
+
+        return new JsonResponse(['output' => $link]);
+
     }
 }

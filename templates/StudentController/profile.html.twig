@@ -1,61 +1,107 @@
 {% extends 'base.html.twig' %}
 {% block title %}My Profile{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container" style="background-color: #E6E6FA">
         <div class="wrapper d-flex">
             <div>
                 {% if student.avatar is null%}
                     <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
                 {% else %}
-                    <img src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
+                    <img src="{{ asset('avatars/' ~ student.avatar) }}" width="200px" height="200px" >
                 {% endif %}
             </div>
                 <div class="ml-3">
-                    <h1>{{ student.name }}</h1>
+                    <h2>ФИО: {{ student.name }}</h2>
                     Email:{{ student.email }}<br>
                     Phone:{{ student.phone }}<br>
 
                     <h2>Время уроков:</h2>
                     {% for lesson in student.lessons %}
                         {% if lesson.dayOfTheWeek == 1  %}
-                            Monday
+                           Понедельник
                         {% elseif lesson.dayOfTheWeek == 2  %}
-                            Tuesday
+                            Вторник
                         {% elseif lesson.dayOfTheWeek == 3  %}
-                            Wednesday
+                            Среда
                         {% elseif lesson.dayOfTheWeek == 4  %}
-                            Thursday
+                            Четверг
                         {% elseif lesson.dayOfTheWeek == 5  %}
-                            Friday
+                            Пятница
                         {% elseif lesson.dayOfTheWeek == 6  %}
-                            Saturday
+                            Субота
                         {% endif %}
                         {{ lesson.time|date('H:i')}}
                 <br>
                     {% endfor %}
                 </div>
             </div>
-        <h2>Homeworks:</h2>
-        {% for lesson in student.lessonsArchive %}
-            <div>
-            <h4>Date:</h4>
-                {{ lesson.date|date('H:i') }}<br>
-             <h4>Task:</h4>
+        <h2>Домашние задания:</h2>
+        {% for lesson in student.lessonsArchive|reverse %}
+            <div class="mb-5">
+            <h4>Дата:</h4>
+                {{ lesson.date|date("m/d/Y") }}<br>
+             <h4>Задание:</h4>
             {{ lesson.homework }}<br>
             {% if lesson.youtubeLink is null %}
-                <h4>Download youtube link:</h4>
+                <div id="videoUpload">
+                <h4>Загрузить видео с ютуб:</h4>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Enter youtube link"  aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" id="input" placeholder="Enter youtube link"  aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">Download</button>
+                        <button class="btn btn-outline-secondary ajax" type="button" id="{{ lesson.id }}">Загрузить</button>
                     </div>
                 </div>
-                {% else %}
-            {{ lesson.youtubeLink}}<br>
+                </div>
+                <div id="ajax-results"></div>
+            {% else %}
+                <iframe class="d-block w-100 videos" id="uploaded" frameborder="0" src="{{ lesson.youtubeLink}}" height="475px"></iframe>
             {% endif %}
+                <h4>Оценка:</h4>
                 {{ lesson.mark }}
+                <h4>Коментарий:</h4>
                 {{ lesson.markComment }}
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).on('click', 'button.ajax', function(){
+            function matchYoutubeUrl(url) {
+                var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                if(url.match(p)){
+                    return url.match(p)[1];
+                }
+                return false;
+            }
+            if(matchYoutubeUrl($('#input').val())){
+            that = $(this);
+            link = $('#input').val();
+            lesson = this.id;
+            $.ajax({
+                url:'/video_upload',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "data": link,
+                    "id":lesson
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
+                    $('div#ajax-results').html('<iframe class="d-block w-100 videos" id="uploaded" frameborder="0" src="'+data.output+'" height="475px"></iframe>');
+                    $('div#videoUpload').hide();
+                },
+                error: function () {
+                    alert('Такое видео уже существует!!')
+            }});
+            return false;
+        }
+            else {
+                alert('Enter a valid youtube url!')
+            }
+        });
+    </script>
 {% endblock %}

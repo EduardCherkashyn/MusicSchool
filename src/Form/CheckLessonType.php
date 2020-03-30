@@ -16,15 +16,19 @@ class CheckLessonType extends AbstractType
     {
         $builder
             ->add('attendance', CheckboxType::class, [
-                'required' => false
+                'required' => false,
+                'label' => 'Посещение'
             ])
             ->add('mark', IntegerType::class, [
                 'attr' => [
                     'min' => 1,
                     'max' => 12
-                ]
+                ],
+                'label'=>'Оценка'
             ])
-            ->add('markComment', TextareaType::class)
+            ->add('markComment', TextareaType::class,[
+                'label'=>'Комментарий'
+            ])
 
         ;
     }

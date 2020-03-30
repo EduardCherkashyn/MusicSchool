@@ -2,32 +2,32 @@
 {% block title %}List of Students{% endblock %}
 
 {% block body %}
-    <div class="container" >
+    <div class="container" style="background-color: #E6E6FA" >
     <table class="table table-hover">
         <tr>
-            <th>Avatar</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Lesson One</th>
-            <th>Time</th>
-            <th>Lesson Two </th>
-            <th>Time</th>
+            <th>Аватар</th>
+            <th>Имя</th>
+            <th>Имейл</th>
+            <th>Телефон</th>
+            <th>Первый урок</th>
+            <th>Время</th>
+            <th>Второй урок </th>
+            <th>Время</th>
         </tr>
         {% for student in students %}
                <tr>
                    {% if student.avatar is null%}
-                    <td>
+                    <th>
                         <a href="{{path('editStudent',({'id':student.id}))}}">
                         <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
                         </a>
-                    </td>
+                    </th>
                 {% else %}
-                 <td>
+                 <th>
                      <a href="{{path('editStudent',({'id':student.id}))}}">
                      <img src="{{ asset('avatars/' ~ student.avatar) }}" alt="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
                      </a>
-                 </td>
+                 </th>
                 {% endif %}
                 <td>{{ student.name }}</td>
                 <td>{{ student.email }}</td>

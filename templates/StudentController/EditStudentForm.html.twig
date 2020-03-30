@@ -3,7 +3,7 @@
 
   {% block body %}
       <div class="container">
-          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Student's Scores <i class="fas fa-award"></i></a>
+          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Успеваемость ученика <i class="fas fa-award"></i></a>
       </br>
           {% if student.avatar is null%}
                 <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
@@ -15,12 +15,12 @@
           {{ form_row(edit_form.email) }}
       {{ form_row(edit_form.phone) }}
           {{ form_row(edit_form.avatar) }}
-          <h2>First Lesson:</h2>
+          <h2>Первый урок:</h2>
       {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
-      <h2>Second Lesson</h2>
+      <h2>Второй урок:</h2>
       {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
-          <button type="submit" class="btn btn-success" value="Edit info" name="Submit" onclick="return confirm('Are u sure?')">Edit Student <i class="fas fa-user-edit"></i></button>
-      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger" onclick="return confirm('Are u sure?')">Delete Student <i class="fas fa-trash"></i></a>
+          <button type="submit" class="btn btn-success" value="Edit info" name="Submit" onclick="return confirm('Are u sure?')">Сохранить <i class="fas fa-user-edit"></i></button>
+      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger" onclick="return confirm('Are u sure?')">Удалить ученика <i class="fas fa-trash"></i></a>
       {{ form_end(edit_form) }}
       </div>
   {% endblock %}

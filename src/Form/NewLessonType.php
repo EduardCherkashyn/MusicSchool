@@ -14,7 +14,7 @@ class NewLessonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $days = [1 => "monday",2 => "tuesday", 3 => "wednesday", 4 => "thursday", 5 => "friday", 6 => "saturday"];
+        $days = [1 => "Понедельник",2 => "Вторник", 3 => "Среда", 4 => "Четверг", 5 => "Пятница", 6 => "Суббота"];
 
         /**
          * @var Student $student

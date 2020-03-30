@@ -4,16 +4,16 @@
     <div class="container">
         <ul class="list-group">
             <li class="list-group-item"><h1>{{ student.name }}</h1></li>
-            <li class="list-group-item"><h3>Date:</h3></li>
+            <li class="list-group-item"><h3>Дата:</h3></li>
             <li class="list-group-item">{{ lesson.date|date("m/d/Y")}}</li>
-            <li class="list-group-item"><h3>Homework:</h3></li>
+            <li class="list-group-item"><h3>Задание:</h3></li>
             <li class="list-group-item">{{ lesson.homework }}</li>
         </ul>
         </br>
-        <h1 class="h1">Check the lesson:</h1>
+        <h1 class="h1">Проверить задание:</h1>
     {{ form_start(check_form) }}
     {{ form_widget(check_form) }}
-    <input type="submit" class="btn-success" value="Submit" name="Submit" />
+    <input type="submit" class="btn-success" value="Подтвердить" name="Submit" />
     {{ form_end(check_form)}}
     </div>
 {% endblock %}

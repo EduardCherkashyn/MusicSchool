@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Today's Schedule{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container" style="background-color: #E6E6FA">
     <table  class="table table-hover">
         {% for message in app.flashes('notice') %}
             <div class="alert alert-danger" role="alert">
@@ -9,27 +9,27 @@
             </div>
         {% endfor %}
         <tr>
-            <th>Day</th>
-            <th>Time</th>
-            <th>Avatar</th>
-            <th>Name</th>
-            <th>Give Homework</th>
-            <th>Check Homework</th>
+            <th>День</th>
+            <th>Время</th>
+            <th>Аватар</th>
+            <th>Имя</th>
+            <th>Задать задание</th>
+            <th>Проверить задание</th>
         </tr>
         {% for lesson in lesssons %}
         <tr>
             {% if lesson.dayOfTheWeek == 1  %}
-                <td>Monday</td>
+                <td>Понедельник</td>
             {% elseif lesson.dayOfTheWeek == 2  %}
-                <td>Tuesday</td>
+                <td>Вторник</td>
             {% elseif lesson.dayOfTheWeek == 3  %}
-                <td>Wednesday</td>
+                <td>Среда</td>
             {% elseif lesson.dayOfTheWeek == 4  %}
-                <td>Thursday</td>
+                <td>Четверг</td>
             {% elseif lesson.dayOfTheWeek == 5  %}
-                <td>Friday</td>
+                <td>Пятница</td>
             {% elseif lesson.dayOfTheWeek == 6  %}
-                <td>Saturday</td>
+                <td>Суббота</td>
             {% endif %}
             <td>{{ lesson.time|date('H:i') }}</td>
             {% if lesson.student.avatar is null%}
@@ -38,8 +38,8 @@
                 <td><img src="{{ asset('avatars/' ~ lesson.student.avatar) }}" alt="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" ></td>
             {% endif %}
             <td>{{ lesson.student.name }}</td>
-            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Give Homework <i class="fas fa-book-open"></i></a></td>
-            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Check Homework <i class="fas fa-check"></i></a></td>
+            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Задать задание <i class="fas fa-book-open"></i></a></td>
+            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-primary btn-lg btn-block" role="button">Проверить задание<i class="fas fa-check"></i></a></td>
         </tr>
         {% endfor %}
     </table>
