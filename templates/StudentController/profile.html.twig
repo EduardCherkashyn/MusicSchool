@@ -1,37 +1,61 @@
 {% extends 'base.html.twig' %}
 {% block title %}My Profile{% endblock %}
 {% block body %}
-    <div class="container d-flex">
-        <div>
-        {% if student.avatar is null%}
-            <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
-        {% else %}
-            <img src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
-        {% endif %}
-        </div>
-        <div class="ml-3">
-            <h1>{{ student.name }}</h1>
-            Email:{{ student.email }}<br>
-            Phone:{{ student.phone }}<br>
-
-            <h2>Время уроков:</h2>
-            {% for lesson in student.lessons %}
-                {% if lesson.dayOfTheWeek == 1  %}
-                    Monday
-                {% elseif lesson.dayOfTheWeek == 2  %}
-                    Tuesday
-                {% elseif lesson.dayOfTheWeek == 3  %}
-                    Wednesday
-                {% elseif lesson.dayOfTheWeek == 4  %}
-                    Thursday
-                {% elseif lesson.dayOfTheWeek == 5  %}
-                    Friday
-                {% elseif lesson.dayOfTheWeek == 6  %}
-                    Saturday
+    <div class="container">
+        <div class="wrapper d-flex">
+            <div>
+                {% if student.avatar is null%}
+                    <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+                {% else %}
+                    <img src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
                 {% endif %}
-                {{ lesson.time|date('H:i')}}
-        <br>
-            {% endfor %}
-        </div>
+            </div>
+                <div class="ml-3">
+                    <h1>{{ student.name }}</h1>
+                    Email:{{ student.email }}<br>
+                    Phone:{{ student.phone }}<br>
+
+                    <h2>Время уроков:</h2>
+                    {% for lesson in student.lessons %}
+                        {% if lesson.dayOfTheWeek == 1  %}
+                            Monday
+                        {% elseif lesson.dayOfTheWeek == 2  %}
+                            Tuesday
+                        {% elseif lesson.dayOfTheWeek == 3  %}
+                            Wednesday
+                        {% elseif lesson.dayOfTheWeek == 4  %}
+                            Thursday
+                        {% elseif lesson.dayOfTheWeek == 5  %}
+                            Friday
+                        {% elseif lesson.dayOfTheWeek == 6  %}
+                            Saturday
+                        {% endif %}
+                        {{ lesson.time|date('H:i')}}
+                <br>
+                    {% endfor %}
+                </div>
+            </div>
+        <h2>Homeworks:</h2>
+        {% for lesson in student.lessonsArchive %}
+            <div>
+            <h4>Date:</h4>
+                {{ lesson.date|date('H:i') }}<br>
+             <h4>Task:</h4>
+            {{ lesson.homework }}<br>
+            {% if lesson.youtubeLink is null %}
+                <h4>Download youtube link:</h4>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Enter youtube link"  aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Download</button>
+                    </div>
+                </div>
+                {% else %}
+            {{ lesson.youtubeLink}}<br>
+            {% endif %}
+                {{ lesson.mark }}
+                {{ lesson.markComment }}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -21,4 +21,12 @@ class StaticPagesController extends AbstractController
     {
         return $this->render('StaticPagesController/index.html.twig');
     }
+
+    /**
+     * @Route("/contacts", name="app_contacts")
+     */
+    public function contactsPageAction()
+    {
+        return $this->render('StaticPagesController/contacts.html.twig');
+    }
 }
