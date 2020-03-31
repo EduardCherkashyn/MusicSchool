@@ -23,10 +23,10 @@ class ScheduleLessonType extends AbstractType
                   'Пятница' => 5,
                   'Суббота' => 6
             ],
-                'label'=> 'День недели'
+                'label'=> 'День недели:'
             ])
             ->add('time', TimeType::class,[
-                'label' => 'Время'
+                'label' => 'Время:'
             ])
         ;
     }

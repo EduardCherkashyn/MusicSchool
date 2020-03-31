@@ -17,17 +17,17 @@ class StudentType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Имя'
+                'label' => 'Имя:'
             ])
             ->add('avatar',FileType::class,[
                 'required' => false,
-                'label' => 'Аватар'
+                'label' => 'Аватар:'
             ])
             ->add('email', EmailType::class,[
-                'label'=> 'Имейл'
+                'label'=> 'Имейл:'
             ])
             ->add('phone', TextType::class,[
-                'label' => 'Телефон'
+                'label' => 'Телефон:'
             ])
             ->add(
                 'lessons',

@@ -1,8 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container" style="background-color: #E6E6FA">
-        <blockquote class="blockquote text-center">
-            <p class="mb-0 h1">Класс преподавателя ударных инструментов Черкашина Александра Александровича</p>
+    <style>
+        .photo{
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+        }
+    </style>
+    <div class="container">
+        <blockquote class="blockquote text-center mb-3">
+            <p class="mb-0 h1 pt-5">Класс преподавателя ударных инструментов Черкашина Александра Александровича</p>
             <footer class="blockquote-footer">Детская музыкальная школа №1 имени Н.В.Лысенко</footer>
         </blockquote>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -34,6 +41,41 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+        <h2 class="mt-5 mb-5 text-center">Мои ученики</h2>
+        <div class="d-flex flex-wrap justify-content-between ">
+        {% for student in students %}
+            {% if student.avatar is null%}
+                <div class="photo">
+                <img class="w-100 h-100" src="{{ asset('avatars/no-avatar-300x300.png') }}">
+                </div>
+            {% else %}
+                <div class="photo">
+                <img class="w-100 h-100" src="{{ asset('avatars/' ~ student.avatar) }}">
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h2 class="mt-5 mb-5 text-center">Фотогалерея</h2>
+        <div class="d-flex flex-wrap justify-content-between">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto1.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto2.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto3.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto4.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto5.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto6.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto7.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto8.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto9.jpg') }}">
+            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto10.jpg') }}">
+        </div>
+        <h2 class="mt-5 mb-5 text-center">Видеогалерея</h2>
+        <div class="d-flex flex-wrap justify-content-between">
+            <iframe class="mt-1" width="500" height="315" src="https://www.youtube.com/embed/BXWHMoHUNwg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="mt-1" width="500" height="315" src="https://www.youtube.com/embed/ND6Xng3aaUQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+
+        <h2 class="text-center mt-5">Все об ударных инструментах</h2>
         <div class="mt-5">
             <p class="text-justify"><b>Ударные музыкальные инструменты</b> - группа музыкальных инструментов, звук из которых извлекается ударом, тряской или покачиванием: молоточков, колотушек, палочек и тому подобного, по звучащему телу: мембране, металлу, дереву и другому. Самое многочисленное семейство среди всех музыкальных инструментов.</p>
         </div>

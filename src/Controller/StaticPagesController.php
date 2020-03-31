@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Student;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,7 +20,11 @@ class StaticPagesController extends AbstractController
      */
     public function homePageAction()
     {
-        return $this->render('StaticPagesController/index.html.twig');
+        $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
+
+        return $this->render('StaticPagesController/index.html.twig',[
+            'students' => $students
+        ]);
     }
 
     /**

@@ -14,7 +14,7 @@ class NewLessonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $days = [1 => "Понедельник",2 => "Вторник", 3 => "Среда", 4 => "Четверг", 5 => "Пятница", 6 => "Суббота"];
+        $days = [1 => "Monday",2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday"];
 
         /**
          * @var Student $student
@@ -37,8 +37,12 @@ class NewLessonType extends AbstractType
                    date('Y-m-d', strtotime($days[$studLessons[1]])) => $secondLesson,
                    $firstLesson2->format('Y-m-d') => $firstLesson2,
                    $secondLesson2->format('Y-m-d') => $secondLesson2,
-               ]])
-            ->add('homework', TextareaType::class)
+               ],
+                'label'=>'Дата:'
+                ])
+            ->add('homework', TextareaType::class,[
+                'label'=>'Задание:'
+            ])
         ;
     }
 

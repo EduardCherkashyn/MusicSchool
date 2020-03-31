@@ -2,15 +2,20 @@
 {% block title %}Edit Student{% endblock %}
 
   {% block body %}
+      <style>
+          label {
+              font-size:20px;
+          }
+      </style>
       <div class="container">
-          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary btn-lg btn-block" role="button">Успеваемость ученика <i class="fas fa-award"></i></a>
       </br>
           {% if student.avatar is null%}
-                <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+                <img  class="mb-3" src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
           {% else %}
-                <img src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
+                <img class="mb-3" src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
           {% endif %}
-      {{form_start(edit_form)}}
+          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary  btn-block" role="button">Успеваемость ученика <i class="fas fa-award"></i></a>
+          {{form_start(edit_form)}}
           {{ form_row(edit_form.name) }}
           {{ form_row(edit_form.email) }}
       {{ form_row(edit_form.phone) }}

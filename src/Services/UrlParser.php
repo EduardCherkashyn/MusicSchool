@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+use App\Entity\Lesson;
 use App\Entity\Student;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 
@@ -24,5 +25,13 @@ class UrlParser
             $lesson->setYoutubeLink($link);
             }
         }
+    }
+
+    public function parseOneLink(Lesson $lesson)
+    {
+        $vsm = new VideoServiceMatcher();
+        $video = $vsm->parse($lesson->getYoutubeLink());
+        $link = $video->getEmbedUrl();
+        $lesson->setYoutubeLink($link);
     }
 }
