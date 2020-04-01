@@ -1,0 +1,10 @@
+*{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.container{
+    background-color: #E6E6FA;
+}
+td, th {
+    border-bottom: 3px solid #4B0082 !important;
+}

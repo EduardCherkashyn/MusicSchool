@@ -2,49 +2,49 @@
 {% block title %}List of Students{% endblock %}
 
 {% block body %}
-    <div class="container" >
+    <div class="container" style="background-color: #E6E6FA" >
     <table class="table table-hover">
         <tr>
-            <th>Avatar</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Lesson One</th>
-            <th>Time</th>
-            <th>Lesson Two </th>
-            <th>Time</th>
+            <th>Аватар</th>
+            <th>Имя</th>
+            <th>Имейл</th>
+            <th>Телефон</th>
+            <th>Первый урок</th>
+            <th>Время</th>
+            <th>Второй урок </th>
+            <th>Время</th>
         </tr>
         {% for student in students %}
                <tr>
                    {% if student.avatar is null%}
-                    <td>
+                    <th>
                         <a href="{{path('editStudent',({'id':student.id}))}}">
                         <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
                         </a>
-                    </td>
+                    </th>
                 {% else %}
-                 <td>
+                 <th>
                      <a href="{{path('editStudent',({'id':student.id}))}}">
                      <img src="{{ asset('avatars/' ~ student.avatar) }}" alt="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
                      </a>
-                 </td>
+                 </th>
                 {% endif %}
                 <td>{{ student.name }}</td>
                 <td>{{ student.email }}</td>
                 <td>{{ student.phone}}</td>
                 {% for lesson in student.lessons %}
                 {% if lesson.dayOfTheWeek == 1  %}
-                <td>Monday</td>
+                <td>Понедельник</td>
                 {% elseif lesson.dayOfTheWeek == 2  %}
-                    <td>Tuesday</td>
+                    <td>Вторник</td>
                 {% elseif lesson.dayOfTheWeek == 3  %}
-                    <td>Wednesday</td>
+                    <td>Среда</td>
                 {% elseif lesson.dayOfTheWeek == 4  %}
-                    <td>Thursday</td>
+                    <td>Четверг</td>
                 {% elseif lesson.dayOfTheWeek == 5  %}
-                    <td>Friday</td>
+                    <td>Пятница</td>
                 {% elseif lesson.dayOfTheWeek == 6  %}
-                    <td>Saturday</td>
+                    <td>Суббота</td>
                 {% endif %}
 
                 <td>{{lesson.time|date('H:i') }}</td>

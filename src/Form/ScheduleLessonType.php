@@ -16,14 +16,18 @@ class ScheduleLessonType extends AbstractType
         $builder
             ->add('dayOfTheWeek', ChoiceType::class, [
                 'choices' => [
-                  'Monday' => 1,
-                  'Tuesday' => 2,
-                  'Wednesday' => 3,
-                  'Thursday' => 4,
-                  'Friday' => 5,
-                  'Saturday' => 6
-            ]])
-            ->add('time', TimeType::class)
+                  'Понедельник' => 1,
+                  'Вторник' => 2,
+                  'Среда' => 3,
+                  'Четверг' => 4,
+                  'Пятница' => 5,
+                  'Суббота' => 6
+            ],
+                'label'=> 'День недели:'
+            ])
+            ->add('time', TimeType::class,[
+                'label' => 'Время:'
+            ])
         ;
     }
 

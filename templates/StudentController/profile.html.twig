@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% block title %}My Profile{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="wrapper d-flex">
+            <div class="mt-5 ml-3">
+                {% if student.avatar is null%}
+                    <img src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
+                {% else %}
+                    <img src="{{ asset('avatars/' ~ student.avatar) }}" width="200px" height="200px" >
+                {% endif %}
+            </div>
+                <div class="ml-3 ml-5">
+                    <h1 class="mt-5">ФИО: {{ student.name }}</h1>
+                    Email:{{ student.email }}<br>
+                    Phone:{{ student.phone }}<br>
+
+                    <h1 class="mt-3">Время уроков:</h1>
+                    {% for lesson in student.lessons %}
+                        {% if lesson.dayOfTheWeek == 1  %}
+                           Понедельник
+                        {% elseif lesson.dayOfTheWeek == 2  %}
+                            Вторник
+                        {% elseif lesson.dayOfTheWeek == 3  %}
+                            Среда
+                        {% elseif lesson.dayOfTheWeek == 4  %}
+                            Четверг
+                        {% elseif lesson.dayOfTheWeek == 5  %}
+                            Пятница
+                        {% elseif lesson.dayOfTheWeek == 6  %}
+                            Субота
+                        {% endif %}
+                        {{ lesson.time|date('H:i')}}
+                <br>
+                    {% endfor %}
+                </div>
+            </div>
+        <hr style="border: 3px solid #4B0082;">
+        <h1 class="mt-5 ml-3 text-center mb-5">Домашние задания:</h1>
+        <hr style="border: 3px solid #4B0082;">
+        {% for lesson in student.lessonsArchive|reverse %}
+            <div class="mb-3 ml-3 mr-3">
+            <h1>Дата:</h1>
+                {{ lesson.date|date("m/d/Y") }}<br>
+             <h1>Задание:</h1>
+            {{ lesson.homework }}<br>
+            {% if lesson.youtubeLink is null %}
+                <div id="videoUpload">
+                <h1>Загрузить видео с ютуб:</h1>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="input" placeholder="Введите Ютуб ссылку"  aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary ajax" type="button" id="{{ lesson.id }}">Загрузить</button>
+                    </div>
+                </div>
+                </div>
+                <div id="ajax-results"></div>
+            {% else %}
+                <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ lesson.youtubeLink}}" height="475px"></iframe>
+            {% endif %}
+                <h1>Оценка:</h1>
+                {{ lesson.mark }}
+                <h1 class="mt-3">Коментарий:</h1>
+                {{ lesson.markComment }}
+            </div>
+            <hr style="border: 3px solid #4B0082;">
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/videoUpload.js') }}"></script>
+{% endblock %}

@@ -66,6 +66,11 @@ class Lesson
      */
     private $markComment;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     */
+    private $youtubeLink;
+
 
     public function getId(): ?int
     {
@@ -140,6 +145,18 @@ class Lesson
     public function setMarkComment(string $markComment): self
     {
         $this->markComment = $markComment;
+
+        return $this;
+    }
+
+    public function getYoutubeLink(): ?string
+    {
+        return $this->youtubeLink;
+    }
+
+    public function setYoutubeLink(?string $youtubeLink): self
+    {
+        $this->youtubeLink = $youtubeLink;
 
         return $this;
     }

@@ -1,19 +1,27 @@
 {% extends 'base.html.twig' %}
 {% block title %}Check Lesson{% endblock %}
 {% block body %}
+    <style>
+        label{
+            font-size: 25px;
+        }
+    </style>
     <div class="container">
         <ul class="list-group">
             <li class="list-group-item"><h1>{{ student.name }}</h1></li>
-            <li class="list-group-item"><h3>Date:</h3></li>
+            <li class="list-group-item"><h3>Дата:</h3></li>
             <li class="list-group-item">{{ lesson.date|date("m/d/Y")}}</li>
-            <li class="list-group-item"><h3>Homework:</h3></li>
+            <li class="list-group-item"><h3>Задание:</h3></li>
             <li class="list-group-item">{{ lesson.homework }}</li>
         </ul>
         </br>
-        <h1 class="h1">Check the lesson:</h1>
+        {% if lesson.youtubeLink %}
+            <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ lesson.youtubeLink}}" height="475px"></iframe>
+        {% endif %}
+        <h1 class="h1 text-center">Проверка задания:</h1>
     {{ form_start(check_form) }}
     {{ form_widget(check_form) }}
-    <input type="submit" class="btn-success" value="Submit" name="Submit" />
+    <input type="submit" class="btn-success" value="Подтвердить" name="Submit" />
     {{ form_end(check_form)}}
     </div>
 {% endblock %}

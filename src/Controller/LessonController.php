@@ -15,6 +15,7 @@ use App\Form\CheckLessonType;
 use App\Form\NewLessonType;
 use App\Services\LessonCheck;
 use App\Services\SortingByDay;
+use App\Services\UrlParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,7 +48,7 @@ class LessonController extends AbstractController
             if ($lesson->getMark() == null) {
                 $this->addFlash(
                     'notice',
-                    'Put mark to the previous lesson !'
+                    'Проверьте прошлый урок !'
                 );
                 return $this->redirectToRoute('lessonsDueDay');
             }
@@ -75,15 +76,18 @@ class LessonController extends AbstractController
     /**
      * @Route("/checkLesson/{id}", name="checkLesson")
      */
-    public function checkLesson(Request $request, Student $student, LessonCheck $lessonCheck)
+    public function checkLesson(Request $request, Student $student, LessonCheck $lessonCheck, UrlParser $parser)
     {
         $lesson = $lessonCheck->beforePutMark($student);
         if($lesson == null || $lesson->getMark() !== null) {
             $this->addFlash(
                     'notice',
-                    'The lesson have not been created yet !'
+                    'Урок еще не создан!'
                 );
             return $this->redirectToRoute('lessonsDueDay');
+        }
+        if($lesson->getYoutubeLink()){
+            $parser->parseOneLink($lesson);
         }
         $form = $this->createForm(CheckLessonType::class, $lesson);
         $form->handleRequest($request);

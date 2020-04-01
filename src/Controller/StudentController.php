@@ -8,25 +8,33 @@
 
 namespace App\Controller;
 
+use App\Entity\Lesson;
 use App\Entity\Student;
 use App\Entity\ScheduleLesson;
+use App\Entity\User;
 use App\Form\StudentType;
 use App\Services\FileUploader;
+use App\Services\PasswordEditing;
+use App\Services\UrlParser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
+
 
 class StudentController extends AbstractController
 {
 
     /**
-     * @Route("/newStudent", name="addStudent")
+     * @Route("/admin/newStudent", name="addStudent")
      */
-    public function addAction(Request $request, FileUploader $fileUploader)
+    public function addAction(Request $request, FileUploader $fileUploader,UserPasswordEncoderInterface $passwordEncoder)
     {
         $student = new Student();
         $lesson = new ScheduleLesson();
@@ -42,7 +50,12 @@ class StudentController extends AbstractController
             $file = $request->files->get('student')['avatar'];
             $fileName = $fileUploader->upload($file);
             $student->setAvatar($fileName);
+            $user = new User();
+            $user->setEmail($student->getEmail());
+            $user->setPassword($passwordEncoder->encodePassword($user,$student->getPhone()));
+            $user->setStudent($student);
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->persist($student);
             $em->persist($lesson);
             $em->flush();
@@ -56,7 +69,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="deleteStudent")
+     * @Route("/admin/delete/{id}", name="deleteStudent")
      */
     public function deleteAction(Student $student)
     {
@@ -68,9 +81,9 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="editStudent")
+     * @Route("/admin/edit/{id}", name="editStudent")
      */
-    public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container)
+    public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container, PasswordEditing $passwordEditing)
     {
         $avatar = $student->getAvatar();
         if($avatar != null) {
@@ -96,6 +109,7 @@ class StudentController extends AbstractController
             else{
                 $student->setAvatar($avatar);
             }
+            $passwordEditing->check($student);
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->flush();
@@ -111,7 +125,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("", name="showStudents")
+     * @Route("/admin", name="showStudents")
      */
     public function showAllAction()
     {
@@ -124,12 +138,44 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/student_results/{id}", name="studentScore")
+     * @Route("/admin/student_results/{id}", name="studentScore")
      */
     public function resultsAction(Student $student)
     {
         return $this->render('StudentController/studentResults.html.twig', [
             'student' => $student
         ]);
+    }
+
+    /**
+     * @Route("/profile", name="studentProfile")
+     */
+    public function profileAction(UrlParser $parser)
+    {
+        $parser->parse($this->getUser()->getStudent());
+
+        return $this->render('StudentController/profile.html.twig', [
+            'student' => $this->getUser()->getStudent()
+        ]);
+    }
+
+    /**
+     * @Route("/video_upload", name="videoUpload")
+     */
+    public function videoUploadAction(Request $request)
+    {
+        if($this->getDoctrine()->getRepository(Lesson::class)->findOneBy(['youtubeLink'=>$request->get('data')])){
+            return new JsonResponse('',404);
+        }
+        $lesson = $this->getDoctrine()->getRepository(Lesson::class)->findOneBy(['id'=> $request->get('id')]);
+        $lesson->setYoutubeLink($request->get('data'));
+        $this->getDoctrine()->getManager()->persist($lesson);
+        $this->getDoctrine()->getManager()->flush();
+        $vsm = new VideoServiceMatcher();
+        $video = $vsm->parse($lesson->getYoutubeLink());
+        $link = $video->getEmbedUrl();
+
+        return new JsonResponse(['output' => $link]);
+
     }
 }

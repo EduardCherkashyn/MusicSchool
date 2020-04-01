@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/contacts.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="container pt-5">
+        <h2 class="mb-5">
+            Черкашин Александр Александрович
+        </h2>
+        <p>Моб.тел. +38(093) 020 70 68 (life)</p>
+        <p>Моб.тел. +38(050) 105 53 79 (MTC)</p>
+        <a href="https://www.facebook.com/profile.php?id=100000548100764&ref=br_tf&epa=SEARCH_BOX" ><img src="{{ asset('images/facebook.png') }}"></a>
+        <a href="https://www.youtube.com/channel/UCu16dxLWecjLIE0uWWrb_fw" ><img width="50px" height="50px" src="{{ asset('images/youtube.png') }}"></a>
+        <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
+
+        {#<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>#}
+    <h2 class="mb-5 mt-5">Украина, г. Черкассы, ул. Байды Вишневецкого, 33</h2>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([32.062077, 49.446774]),
+                zoom: 18
+            })
+        });
+    </script>
+    </div>
+{% endblock %}

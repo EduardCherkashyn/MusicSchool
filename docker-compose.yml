@@ -1,0 +1,36 @@
+version: '3.6'
+services:
+
+  music_school:
+    image: music_school
+    build:
+      context: .
+      target: develop
+    container_name: music_school
+    volumes:
+      - ./:/app
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/php-fpm/php-ini-overrides.ini:/etc/php7/conf.d/99-overrides.ini
+      - ./docker/supervisor/supervisor.ini:/etc/supervisor.d/supervisor.ini
+    depends_on:
+      - music_school_mysql
+    ports:
+      - 80:80
+    tty: true
+    working_dir: /app
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+
+  music_school_mysql:
+    image: mysql:5.7
+    container_name: music_school_mysql
+    restart: always
+    environment:
+       - MYSQL_ROOT_PASSWORD=123123
+       - MYSQL_DATABASE=company_site
+       - MYSQL_USER=company_site_user
+       - MYSQL_PASSWORD=123123
+    volumes:
+       - ./mysql_data:/var/lib/mysql
+
