@@ -14,6 +14,7 @@ use App\Entity\ScheduleLesson;
 use App\Entity\User;
 use App\Form\StudentType;
 use App\Services\FileUploader;
+use App\Services\PasswordEditing;
 use App\Services\UrlParser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -82,7 +83,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/admin/edit/{id}", name="editStudent")
      */
-    public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container)
+    public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container, PasswordEditing $passwordEditing)
     {
         $avatar = $student->getAvatar();
         if($avatar != null) {
@@ -108,6 +109,7 @@ class StudentController extends AbstractController
             else{
                 $student->setAvatar($avatar);
             }
+            $passwordEditing->check($student);
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->flush();

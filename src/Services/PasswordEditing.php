@@ -25,8 +25,12 @@ class PasswordEditing
         $this->encoder = $passwordEncoder;
     }
 
-    public function check(Student $student)
+    public function check(Student $student) :void
     {
-        $this->manager->getRepository(User::class)->findOneBy(['student_id'=>$student->getId()]);
+        $user = $this->manager->getRepository(User::class)->findOneBy(['student'=>$student->getId()]);
+        if(!$this->encoder->isPasswordValid($user,$student->getPhone())){
+            $user->setPassword($this->encoder->encodePassword($user,$student->getPhone()));
+            $this->manager->persist($user);
+        }
     }
 }
