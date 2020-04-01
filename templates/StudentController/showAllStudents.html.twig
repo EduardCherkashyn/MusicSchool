@@ -34,17 +34,17 @@
                 <td>{{ student.phone}}</td>
                 {% for lesson in student.lessons %}
                 {% if lesson.dayOfTheWeek == 1  %}
-                <td>Monday</td>
+                <td>Понедельник</td>
                 {% elseif lesson.dayOfTheWeek == 2  %}
-                    <td>Tuesday</td>
+                    <td>Вторник</td>
                 {% elseif lesson.dayOfTheWeek == 3  %}
-                    <td>Wednesday</td>
+                    <td>Среда</td>
                 {% elseif lesson.dayOfTheWeek == 4  %}
-                    <td>Thursday</td>
+                    <td>Четверг</td>
                 {% elseif lesson.dayOfTheWeek == 5  %}
-                    <td>Friday</td>
+                    <td>Пятница</td>
                 {% elseif lesson.dayOfTheWeek == 6  %}
-                    <td>Saturday</td>
+                    <td>Суббота</td>
                 {% endif %}
 
                 <td>{{lesson.time|date('H:i') }}</td>
