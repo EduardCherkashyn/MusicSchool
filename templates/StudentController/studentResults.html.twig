@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
-{% block title %}Results{% endblock %}
+{% block title %}Статистика ученика{% endblock %}
 {% block body %}
     <div class="container">
     <table class="table table-hover">
         <tr>
-            <th>Date:</th>
-            <th>Homework</th>
-            <th>Mark</th>
-            <th>Comments</th>
-            <th>Attendance</th>
+            <th>Дата:</th>
+            <th>Задание</th>
+            <th>Оценка</th>
+            <th>Комментарий</th>
+            <th>Посещаемость</th>
         </tr>
 {%for lesson in student.lessonsArchive %}
     <tr>
@@ -17,9 +17,9 @@
         <td>{{ lesson.mark }}</td>
         <td>{{ lesson.markComment}}</td>
         {%if lesson.attendance is null%}
-            <td>N</td>
+            <td>Отсутствовал</td>
         {% else %}
-            <td>Y</td>
+            <td>Присутствовал</td>
             {% endif %}
     </tr>
 {% endfor %}
