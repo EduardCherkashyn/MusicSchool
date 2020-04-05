@@ -81,7 +81,11 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return new RedirectResponse('/');
+        if(in_array("ROLE_ADMIN", $token->getUser()->getRoles())){
+            return new RedirectResponse('/admin');
+        }
+
+        return new RedirectResponse('/profile');
     }
 
     protected function getLoginUrl()
