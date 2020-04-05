@@ -74,6 +74,8 @@ class StudentController extends AbstractController
     public function deleteAction(Student $student)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['student'=> $student->getId()]);
+        $em->remove($user);
         $em->remove($student);
         $em->flush();
 

@@ -27,14 +27,16 @@ class NewLessonType extends AbstractType
         }
         $firstLesson = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[0]])));
         $secondLesson = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[1]])));
-        $firstLesson2 = $firstLesson->modify('+7 days');
-        $secondLesson2 = $secondLesson->modify('+7 days');
+        $firstLesson2 = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[0]])));
+        $secondLesson2 = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[1]])));
+        $firstLesson2->modify('+7 days');
+        $secondLesson2->modify('+7 days');
 
         $builder
             ->add('date', ChoiceType::class, [
                'choices' => [
-                   date('Y-m-d', strtotime($days[$studLessons[0]])) => $firstLesson,
-                   date('Y-m-d', strtotime($days[$studLessons[1]])) => $secondLesson,
+                   $firstLesson->format('Y-m-d') => $firstLesson,
+                   $secondLesson->format('Y-m-d') => $secondLesson,
                    $firstLesson2->format('Y-m-d') => $firstLesson2,
                    $secondLesson2->format('Y-m-d') => $secondLesson2,
                ],
