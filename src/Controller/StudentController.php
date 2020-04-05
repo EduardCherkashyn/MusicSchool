@@ -130,7 +130,7 @@ class StudentController extends AbstractController
     public function showAllAction()
     {
         $repository = $this->getDoctrine()->getRepository(Student::class);
-        $students = $repository->findAll();
+        $students = $repository->findBy([],['name' => 'ASC']);
 
         return $this->render('StudentController/showAllStudents.html.twig', [
           'students' => $students

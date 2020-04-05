@@ -1,0 +1,59 @@
+{% extends'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/schedule.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="wrapper d-flex flex-wrap justify-content-between">
+            <div>
+                <h4 class="text-center">Понедельник</h4>
+                <ul class="list-group">
+                    {% for lesson in lessons['Monday'] %}
+                        <li class="list-group-item">{{ lesson.student.name }} <span class="lessonTime">{{ lesson.time|date('H:i') }} - {{ lesson.time|date_modify('+ 45 min')|date('H:i') }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-center">Вторник</h4>
+                <ul class="list-group">
+                    {% for lesson in lessons['Tuesday'] %}
+                        <li class="list-group-item">{{ lesson.student.name }} <span class="lessonTime"> {{ lesson.time|date('H:i') }} - {{ lesson.time|date_modify('+ 45 min')|date('H:i') }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-center">Среда</h4>
+                <ul class="list-group">
+                    {% for lesson in lessons['Wednesday'] %}
+                        <li class="list-group-item">{{ lesson.student.name }} <span class="lessonTime"> {{ lesson.time|date('H:i') }} - {{ lesson.time|date_modify('+ 45 min')|date('H:i') }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-center">Четверг</h4>
+                <ul class="list-group">
+                    {% for lesson in lessons['Thursday'] %}
+                        <li class="list-group-item">{{ lesson.student.name }} <span class="lessonTime"> {{ lesson.time|date('H:i') }} - {{ lesson.time|date_modify('+ 45 min')|date('H:i') }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-center">Пятница</h4>
+                <ul class="list-group">
+                    {% for lesson in lessons['Friday'] %}
+                        <li class="list-group-item">{{ lesson.student.name }} <span class="lessonTime"> {{ lesson.time|date('H:i') }} - {{ lesson.time|date_modify('+ 45 min')|date('H:i') }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-center">Суббота</h4>
+                <ul class="list-group">
+                    {% for lesson in lessons['Saturday'] %}
+                        <li class="list-group-item">{{ lesson.student.name }}<span class="lessonTime"> {{ lesson.time|date('H:i') }} - {{ lesson.time|date_modify('+ 45 min')|date('H:i') }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

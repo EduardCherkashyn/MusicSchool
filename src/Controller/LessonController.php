@@ -14,7 +14,7 @@ use App\Entity\Student;
 use App\Form\CheckLessonType;
 use App\Form\NewLessonType;
 use App\Services\LessonCheck;
-use App\Services\SortingByDay;
+use App\Services\ScheduleSorting;
 use App\Services\UrlParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,23 +23,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class LessonController extends AbstractController
 {
     /**
-     * @Route("/listOfLessons", name="lessonsDueDay")
+     * @Route("/admin/listOfLessons", name="lessonsDueDay")
      */
-    public function lessonsAction(SortingByDay $sortingByDay)
+    public function lessonsAction()
     {
         $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
-        $lessons = $repository->findBy(['dayOfTheWeek' => date('w')]);
-        $sortedLessonsByDay = $sortingByDay->indexAction($lessons);
 
         return $this->render('LessonController/lessons.html.twig', [
-            'lesssons' => $sortedLessonsByDay
+            'lesssons' => $repository->findBy(['dayOfTheWeek' => date('w')],['time' => 'ASC'])
         ]);
     }
 
     /**
-     * @Route("/newLesson/{id}", name="createLesson")
+     * @Route("/admin/newLesson/{id}", name="createLesson")
      */
-    public function newLessonAction(Student $student, Request $request, LessonCheck $lessonCheck)
+    public function newLessonAction(Student $student, Request $request)
     {
         $lessons = $student->getLessonsArchive();
         if (!$lessons->isEmpty()) {
@@ -74,7 +72,7 @@ class LessonController extends AbstractController
     }
 
     /**
-     * @Route("/checkLesson/{id}", name="checkLesson")
+     * @Route("/admin/checkLesson/{id}", name="checkLesson")
      */
     public function checkLesson(Request $request, Student $student, LessonCheck $lessonCheck, UrlParser $parser)
     {
@@ -104,5 +102,18 @@ class LessonController extends AbstractController
                 'student' => $student,
                 'lesson' => $lesson
             ]);
+    }
+
+    /**
+     * @Route("/admin/schedule", name="lessonsDueWeek")
+     */
+    public function scheduleAction(ScheduleSorting $sorting)
+    {
+        $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
+        $lessons = $sorting->sort($repository->findBy([],['dayOfTheWeek' => 'ASC','time' => 'ASC']));
+
+        return $this->render('LessonController/schedule.html.twig', [
+            'lessons' => $lessons
+        ]);
     }
 }
