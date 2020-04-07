@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\Lesson;
 use App\Entity\ScheduleLesson;
 use App\Entity\Student;
@@ -28,7 +29,6 @@ class LessonController extends AbstractController
     public function lessonsAction()
     {
         $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
-        date_default_timezone_set('Europe/Kiev');
 
         return $this->render('LessonController/lessons.html.twig', [
             'lesssons' => $repository->findBy(['dayOfTheWeek' => date('w')],['time' => 'ASC'])
@@ -58,6 +58,11 @@ class LessonController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $student->addLessonsArchive($lesson);
+            $files = $form['files']->getData();
+            /** @var File $file */
+            foreach ($files as $file){
+                $lesson->addFile($file);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->persist($lesson);

@@ -44,6 +44,12 @@
                 {{ lesson.date|date("m/d/Y") }}<br>
              <h1>Задание:</h1>
             {{ lesson.homework }}<br>
+                {% if lesson.files is not empty %}
+                    <h1>Скачать ноты:</h1>
+                    {% for file in lesson.files %}
+                    <a href="{{ asset('assets/'~ file.path)}}" class="btn btn-primary">{{ file.name }}</a>
+                    {% endfor %}
+                {% endif %}
             {% if lesson.youtubeLink is null %}
                 <div id="videoUpload">
                 <h1>Загрузить видео с ютуб:</h1>

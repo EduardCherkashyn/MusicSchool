@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\File;
 use App\Entity\Lesson;
 use App\Entity\Student;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -34,18 +36,28 @@ class NewLessonType extends AbstractType
 
         $builder
             ->add('date', ChoiceType::class, [
-               'choices' => [
-                   $firstLesson->format('Y-m-d') => $firstLesson,
-                   $secondLesson->format('Y-m-d') => $secondLesson,
-                   $firstLesson2->format('Y-m-d') => $firstLesson2,
-                   $secondLesson2->format('Y-m-d') => $secondLesson2,
-               ],
+                'choices' => [
+                    $firstLesson->format('Y-m-d') => $firstLesson,
+                    $secondLesson->format('Y-m-d') => $secondLesson,
+                    $firstLesson2->format('Y-m-d') => $firstLesson2,
+                    $secondLesson2->format('Y-m-d') => $secondLesson2,
+                ],
                 'label'=>'Дата:'
-                ])
+            ])
+            ->add('files',  EntityType::class,[
+                'class' => File::class,
+                'label' => 'Добавить файл',
+                'choice_label' => 'name',
+                'choice_value' => function (File $entity) {
+                    return $entity ? $entity->getId() : '';
+                },
+                 'multiple' => true,
+                 'expanded' => true,
+                 'mapped' => false
+            ])
             ->add('homework', TextareaType::class,[
                 'label'=>'Задание:'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -55,3 +67,4 @@ class NewLessonType extends AbstractType
         ]);
     }
 }
+
