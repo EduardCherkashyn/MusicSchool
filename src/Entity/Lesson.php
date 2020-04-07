@@ -35,7 +35,7 @@ class Lesson
     /**
      * @Assert\Length(
      *      min = 10,
-     *      max = 300,
+     *      max = 500,
      *      minMessage = "Your text be at least {{ limit }} characters long",
      *      maxMessage = "Your text cannot be longer than {{ limit }} characters"
      * )
