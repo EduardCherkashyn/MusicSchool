@@ -3,13 +3,13 @@
 {% block title %}Список файлов{% endblock %}
 
 {% block body %}
-    <div class="container">
-    <h1>Список файлов</h1>
+    <div class="container pt-3">
+    <h1>Список файлов:</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>№</th>
                 <th>Имя</th>
                 <th>Действия</th>
             </tr>
@@ -20,7 +20,7 @@
                 <td>{{ file.id }}</td>
                 <td>{{ file.name }}</td>
                 <td>
-                    <a href="{{ path('file_show', {'id': file.id}) }}" class="btn btn-primary">показать</a>
+                    <a href="{{ path('file_show', {'id': file.id}) }}" class="btn btn-primary mr-3">показать</a>
                     <a href="{{ path('file_edit', {'id': file.id}) }}"  class="btn btn-warning">редактировать</a>
                 </td>
             </tr>

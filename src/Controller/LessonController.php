@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\Lesson;
 use App\Entity\ScheduleLesson;
 use App\Entity\Student;
@@ -57,6 +58,11 @@ class LessonController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $student->addLessonsArchive($lesson);
+            $files = $form['files']->getData();
+            /** @var File $file */
+            foreach ($files as $file){
+                $lesson->addFile($file);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->persist($lesson);
