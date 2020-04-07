@@ -32,5 +32,9 @@ class PasswordEditing
             $user->setPassword($this->encoder->encodePassword($user,$student->getPhone()));
             $this->manager->persist($user);
         }
+        if( $user->getEmail() !== $student->getEmail()){
+            $user->setEmail($student->getEmail());
+            $this->manager->persist($user);
+        }
     }
 }
