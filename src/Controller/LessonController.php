@@ -28,7 +28,6 @@ class LessonController extends AbstractController
     public function lessonsAction()
     {
         $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
-        date_default_timezone_set('Europe/Kiev');
 
         return $this->render('LessonController/lessons.html.twig', [
             'lesssons' => $repository->findBy(['dayOfTheWeek' => date('w')],['time' => 'ASC'])
