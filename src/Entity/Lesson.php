@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -70,6 +72,18 @@ class Lesson
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      */
     private $youtubeLink;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\File", mappedBy="lessons")
+     */
+    private $files;
+
+
+
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -157,6 +171,34 @@ class Lesson
     public function setYoutubeLink(?string $youtubeLink): self
     {
         $this->youtubeLink = $youtubeLink;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|File[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->addLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            $file->removeLesson($this);
+        }
 
         return $this;
     }

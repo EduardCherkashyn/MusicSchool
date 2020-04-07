@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    <button class="btn btn-warning">{{ button_label|default('Сохранить') }}</button>
+{{ form_end(form) }}

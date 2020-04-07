@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактировать файл{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Редактировать файл</h1>
+
+    {{ include('file/_form_edit.html.twig', {'button_label': 'Редактировать'}) }}
+
+    <a href="{{ path('file_index') }}" class="btn btn-primary">назад к списку</a>
+
+    {{ include('file/_delete_form.html.twig') }}
+</div>
+{% endblock %}
