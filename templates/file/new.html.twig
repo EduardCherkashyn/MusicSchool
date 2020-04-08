@@ -3,11 +3,11 @@
 {% block title %}Новый файл{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container  pt-3">
     <h1>Добавить новый файл</h1>
 
     {{ include('file/_form.html.twig') }}
 
-    <a href="{{ path('file_index') }}">назад к списку</a>
+    <a href="{{ path('file_index') }}" class="btn btn-primary mt-3">назад к списку</a>
     </div>
 {% endblock %}

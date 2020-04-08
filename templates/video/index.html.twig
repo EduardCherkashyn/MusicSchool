@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список видео{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+    <h1>Список видео</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Видео</th>
+                <th>действие</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for video in videos %}
+            <tr>
+                <td>{{ video.id }}</td>
+                <td><iframe class="d-block w-50 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ video.link}}" height="200px"></iframe></td>
+                <td>
+                    {{ include('video/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">нет доступных видео</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('video_new') }}" class="btn btn-warning">Добавить видео</a>
+    </div>
+{% endblock %}

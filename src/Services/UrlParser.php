@@ -10,11 +10,19 @@ namespace App\Services;
 
 use App\Entity\Lesson;
 use App\Entity\Student;
+use App\Repository\VideoRepository;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 
 class UrlParser
 {
+    private $videoRepository;
+
+    public function __construct(VideoRepository $videoRepository)
+    {
+        $this->videoRepository = $videoRepository;
+    }
+
     public function parse(Student $student) :void
     {
         $vsm = new VideoServiceMatcher();
@@ -33,5 +41,18 @@ class UrlParser
         $video = $vsm->parse($lesson->getYoutubeLink());
         $link = $video->getEmbedUrl();
         $lesson->setYoutubeLink($link);
+    }
+
+    public function parseUrl() :array
+    {
+        $vsm = new VideoServiceMatcher();
+        $videos = $this->videoRepository->findBy([],['id' => 'DESC']);
+        foreach($videos as $videoObj){
+            $video = $vsm->parse($videoObj->getLink());
+            $link = $video->getEmbedUrl();
+            $videoObj->setLink($link);
+        }
+
+        return $videos;
     }
 }

@@ -44,7 +44,7 @@ class LessonController extends AbstractController
         if (!$lessons->isEmpty()) {
             /** @var Lesson $lesson */
             $lesson = $lessons->last();
-            if ($lesson->getMark() == null) {
+            if ($lesson->getAttendance() === null) {
                 $this->addFlash(
                     'notice',
                     'Проверьте прошлый урок !'
@@ -83,7 +83,7 @@ class LessonController extends AbstractController
     public function checkLesson(Request $request, Student $student, LessonCheck $lessonCheck, UrlParser $parser)
     {
         $lesson = $lessonCheck->beforePutMark($student);
-        if($lesson == null || $lesson->getMark() !== null) {
+        if($lesson === null || $lesson->getAttendance() !== null) {
             $this->addFlash(
                     'notice',
                     'Урок еще не создан!'
