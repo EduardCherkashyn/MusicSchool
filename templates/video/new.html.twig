@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новое видео{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+    <h1>Добавить новое видео</h1>
+
+    {{ include('video/_form.html.twig') }}
+
+    <a href="{{ path('video_index') }}" class="btn btn-primary mt-3">назад к списку</a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/youtubeValidation.js') }}"></script>
+{% endblock %}

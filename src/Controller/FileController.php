@@ -38,7 +38,7 @@ class FileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /**
-             * @var UploadedFile $file
+             * @var UploadedFile $asset
              */
             $asset = $request->files->get('file')['path'];
             $fileName = $fileUploader->uploadAsset($asset);

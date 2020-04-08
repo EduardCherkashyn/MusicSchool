@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Фото{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+    <h1>Добавьте новое фото</h1>
+
+    {{ include('photo/_form.html.twig') }}
+
+    <a href="{{ path('photo_index') }}" class="btn btn-primary">назад к списку</a>
+    </div>
+{% endblock %}

@@ -58,21 +58,15 @@
         </div>
         <h2 class="mt-5 mb-5 text-center">Фотогалерея</h2>
         <div class="d-flex flex-wrap justify-content-between">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto1.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto2.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto3.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto4.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto5.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto6.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto7.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto8.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto9.jpg') }}">
-            <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('gallery/foto10.jpg') }}">
+            {%  for photo in photos %}
+                <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('photos/'~photo.path) }}">
+            {% endfor %}
         </div>
         <h2 class="mt-5 mb-5 text-center">Видеогалерея</h2>
         <div class="d-flex flex-wrap justify-content-between">
-            <iframe class="mt-1" width="500" height="315" src="https://www.youtube.com/embed/BXWHMoHUNwg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <iframe class="mt-1" width="500" height="315" src="https://www.youtube.com/embed/ND6Xng3aaUQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            {% for video in videos %}
+            <iframe class="mt-1" width="500" height="315" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            {% endfor %}
         </div>
 
 
