@@ -16,10 +16,10 @@
         <td>{{ lesson.homework }}</td>
         <td>{{ lesson.mark }}</td>
         <td>{{ lesson.markComment}}</td>
-        {%if lesson.attendance is null%}
-            <td>Отсутствовал</td>
-        {% else %}
+        {%if lesson.attendance%}
             <td>Присутствовал</td>
+        {% else %}
+            <td>Отсутствовал</td>
             {% endif %}
     </tr>
 {% endfor %}

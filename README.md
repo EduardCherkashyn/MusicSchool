@@ -30,3 +30,9 @@ php bin/console doctrine:fixtures:load
 7.Start server
 
 php bin/console server:run 0.0.0.0:8000
+
+# Backup
+docker exec music_school_mysql /usr/bin/mysqldump -u root --password=123123 company_site > backup.sql
+
+# Restore
+cat backup.sql | docker exec -i music_school_mysql /usr/bin/mysql -u root --password=123123 company_site

@@ -20,6 +20,7 @@ class CheckLessonType extends AbstractType
                 'label' => 'Посещение:'
             ])
             ->add('mark', IntegerType::class, [
+                'required' => false,
                 'attr' => [
                     'min' => 1,
                     'max' => 12
@@ -27,6 +28,7 @@ class CheckLessonType extends AbstractType
                 'label'=>'Оценка:'
             ])
             ->add('markComment', TextareaType::class,[
+                'required' => false,
                 'label'=>'Комментарий:'
             ])
 
@@ -37,6 +39,7 @@ class CheckLessonType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Lesson::class,
+            'isProcessorDisable'=> false
         ]);
     }
 }
