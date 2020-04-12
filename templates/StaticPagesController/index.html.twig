@@ -43,7 +43,7 @@
             </a>
         </div>
         <h2 class="mt-5 mb-5 text-center">Мои ученики</h2>
-        <div class="d-flex flex-wrap justify-content-between ">
+        <div class="d-flex flex-wrap justify-content-around ">
         {% for student in students %}
             {% if student.avatar is null%}
                 <div class="photo">
@@ -56,20 +56,6 @@
             {% endif %}
         {% endfor %}
         </div>
-        <h2 class="mt-5 mb-5 text-center">Фотогалерея</h2>
-        <div class="d-flex flex-wrap justify-content-between">
-            {%  for photo in photos %}
-                <img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('photos/'~photo.path) }}">
-            {% endfor %}
-        </div>
-        <h2 class="mt-5 mb-5 text-center">Видеогалерея</h2>
-        <div class="d-flex flex-wrap justify-content-between">
-            {% for video in videos %}
-            <iframe class="mt-1" width="500" height="315" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            {% endfor %}
-        </div>
-
-
         <h2 class="text-center mt-5">Все об ударных инструментах</h2>
         <div class="mt-5">
             <p class="text-justify"><b>Ударные музыкальные инструменты</b> - группа музыкальных инструментов, звук из которых извлекается ударом, тряской или покачиванием: молоточков, колотушек, палочек и тому подобного, по звучащему телу: мембране, металлу, дереву и другому. Самое многочисленное семейство среди всех музыкальных инструментов.</p>

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}Фото{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+    <link href="{{ asset('css/photo.css') }}" rel="stylesheet" crossorigin="anonymous">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h2 class="pt-5 mb-5 text-center">Фотогалерея</h2>
+        <div class="d-flex flex-wrap justify-content-around">
+            {%  for photo in photos %}
+                <div class="wrapper mt-4 ml-2 d-flex align-items-center">
+                    <img class="image m-auto"  src="{{ asset('photos/'~photo.path) }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
