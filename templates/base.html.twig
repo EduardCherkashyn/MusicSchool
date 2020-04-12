@@ -6,6 +6,7 @@
         {% block stylesheets %}
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
             <link href="{{ asset('css/base.css') }}" rel="stylesheet" crossorigin="anonymous">
@@ -30,33 +31,36 @@
                     </li>
                 {% endif %}
                 {% if is_granted("ROLE_ADMIN") %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('showStudents') }}">Список учеников <i class="fas fa-users"></i><span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('lessonsDueDay') }}">Расписание на сегодня <i class="fas fa-calendar-alt"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('lessonsDueWeek') }}">Расписание на неделю</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Ученик
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('lessonsDueDay') }}">Расписание на сегодня <i class="fas fa-calendar-alt"></i></a>
+                        <a class="dropdown-item" href="{{ path('showStudents') }}">Список учеников <i class="fas fa-users"></i><span class="sr-only">(current)</span></a>
+                        <a class="dropdown-item" href="{{ path('lesson_index') }}">Редактировать урок</a>
                         <a class="dropdown-item" href="{{ path('addStudent') }}">Добавить нового ученика <i class="fas fa-user-graduate"></i></a>
+                        <a class="dropdown-item" href="{{ path('lessonsDueWeek') }}">Расписание на неделю</a>
                     </div>
                 </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('file_index') }}">Ноты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('video_index') }}">Видео</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('photo_index') }}">Фото</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Медиатека
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                            <a class="dropdown-item" href="{{ path('video_index') }}">Видео</a>
+                            <a class="dropdown-item" href="{{ path('photo_index') }}">Фото</a>
+                            <a class="dropdown-item" href="{{ path('file_index') }}">Ноты</a>
+
+                        </div>
                     </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_video_gallery') }}">Видео</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_photo_gallery') }}">Фото</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_contacts') }}">Контакты</a>
                 </li>

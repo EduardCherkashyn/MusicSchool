@@ -20,14 +20,12 @@ class StaticPagesController extends AbstractController
     /**
      * @Route("/", name="app_home")
      */
-    public function homePageAction(UrlParser $urlParser, PhotoRepository $photoRepository)
+    public function homePageAction()
     {
         $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
 
         return $this->render('StaticPagesController/index.html.twig',[
-            'students' => $students,
-            'videos' => $urlParser->parseUrl(),
-            'photos' => $photoRepository->findBy([],['id'=>'DESC'])
+            'students' => $students
         ]);
     }
 
@@ -37,5 +35,25 @@ class StaticPagesController extends AbstractController
     public function contactsPageAction()
     {
         return $this->render('StaticPagesController/contacts.html.twig');
+    }
+
+    /**
+     * @Route("/video", name="app_video_gallery")
+     */
+    public function videoPageAction(UrlParser $urlParser)
+    {
+        return $this->render('StaticPagesController/video.html.twig',[
+            'videos' => $urlParser->parseUrl()
+        ]);
+    }
+
+    /**
+     * @Route("/photo", name="app_photo_gallery")
+     */
+    public function photoPageAction(PhotoRepository $photoRepository)
+    {
+        return $this->render('StaticPagesController/photo.html.twig',[
+            'photos' => $photoRepository->findBy([],['id'=>'DESC'])
+        ]);
     }
 }

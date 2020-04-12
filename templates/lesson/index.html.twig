@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Уроки{% endblock %}
+
+{% block body %}
+    <div class="container pt-3 pb-3">
+    <h1>Уроки</h1>
+        <a href="{{ path('lesson_new') }}" class="btn btn-primary">Создать новый</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Студент</th>
+                <th>Задание</th>
+                <th>Посещаемость</th>
+                <th>Оценка</th>
+                <th>Коментарий</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lesson in lessons %}
+            <tr>
+                <td>{{ lesson.date ? lesson.date|date('Y-m-d') : '' }}</td>
+                <td>{{ lesson.student.name }}</td>
+                <td>{{ lesson.homework }}</td>
+                <td>{{ lesson.attendance ? 'Присутствовал' : 'Отсутствовал' }}</td>
+                {% if lesson.mark == 1 %}
+                    <td></td>
+                {% else %}
+                    <td>{{ lesson.mark }}</td>
+                {% endif %}
+                <td>{{ lesson.markComment }}</td>
+                <td>
+                    <a href="{{ path('lesson_edit', {'id': lesson.id}) }}" class="btn btn-warning mb-3">редактировать</a>
+                    {{ include('lesson/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">нет записей</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+{% endblock %}
