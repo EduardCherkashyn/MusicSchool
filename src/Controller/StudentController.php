@@ -14,6 +14,7 @@ use App\Entity\ScheduleLesson;
 use App\Entity\User;
 use App\Entity\YoutubeLink;
 use App\Form\StudentType;
+use App\Repository\StudentRepository;
 use App\Services\FileUploader;
 use App\Services\PasswordEditing;
 use App\Services\UrlParser;
@@ -182,6 +183,27 @@ class StudentController extends AbstractController
         $link = $video->getEmbedUrl();
 
         return new JsonResponse(['output' => $link]);
+
+    }
+
+    /**
+     * @Route("/diagramm_data", name="diagramm_data")
+     */
+    public function getResultsdAction(Request $request, StudentRepository $studentRepository)
+    {
+        $student = $studentRepository->findOneBy(['id'=> $request->get('student')]);
+        $lessons = $student->getLessonsArchive();
+        $data = [];
+        $data[0] = ['Дата', 'Оценка' ];
+        $i = 1;
+        /** @var Lesson $lesson */
+        foreach ($lessons as $lesson){
+            $data[$i][] = $lesson->getDate()->format('d-m-Y');
+            $data[$i][] = $lesson->getMark();
+            $i++;
+        }
+
+        return new JsonResponse($data);
 
     }
 }
