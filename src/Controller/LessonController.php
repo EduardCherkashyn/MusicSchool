@@ -90,7 +90,7 @@ class LessonController extends AbstractController
                 );
             return $this->redirectToRoute('lessonsDueDay');
         }
-        if($lesson->getYoutubeLink()){
+        if($lesson->getYoutubeLinks()){
             $parser->parseOneLink($lesson);
         }
         $form = $this->createForm(CheckLessonType::class, $lesson);

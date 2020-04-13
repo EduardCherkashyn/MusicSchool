@@ -50,20 +50,22 @@
                     <a href="{{ asset('assets/'~ file.path)}}" class="btn btn-primary">{{ file.name }}</a>
                     {% endfor %}
                 {% endif %}
-            {% if lesson.youtubeLink is null %}
-                <div id="videoUpload">
-                <h1>Загрузить видео с ютуб:</h1>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="input" placeholder="Введите Ютуб ссылку"  aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary ajax" type="button" id="{{ lesson.id }}">Загрузить</button>
+                {% if lesson.youtubeLinks|length < 3 %}
+                    <div id="videoUpload{{ lesson.id }}">
+                        <h1>Загрузить видео с ютуб (не более 3-х):</h1>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="input{{ lesson.id }}" placeholder="Введите Ютуб ссылку"  aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary ajax" type="button" id="{{ lesson.id }}">Загрузить</button>
+                            </div>
+                        </div>
                     </div>
+                {% endif %}
+                <div id="ajax-results{{ lesson.id }}">
+                    {% for link in lesson.youtubeLinks  %}
+                        <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ link.path}}" height="475px"></iframe>
+                {% endfor %}
                 </div>
-                </div>
-                <div id="ajax-results"></div>
-            {% else %}
-                <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ lesson.youtubeLink}}" height="475px"></iframe>
-            {% endif %}
                 <h1>Оценка:</h1>
                 {{ lesson.mark }}
                 <h1 class="mt-3">Коментарий:</h1>
