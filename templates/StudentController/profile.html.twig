@@ -35,6 +35,7 @@
                     {% endfor %}
                 </div>
             </div>
+        <div id="columnchart_values" class="{{ student.id }} w-100" style="height: 300px;"></div>
         <hr style="border: 3px solid #4B0082;">
         <h1 class="mt-5 ml-3 text-center mb-5">Домашние задания:</h1>
         <hr style="border: 3px solid #4B0082;">
@@ -78,4 +79,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/videoUpload.js') }}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('js/progressChart.js') }}"></script>
 {% endblock %}
