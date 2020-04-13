@@ -15,9 +15,9 @@
             <li class="list-group-item">{{ lesson.homework }}</li>
         </ul>
         </br>
-        {% if lesson.youtubeLink %}
-            <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ lesson.youtubeLink}}" height="475px"></iframe>
-        {% endif %}
+        {% for link in lesson.youtubeLinks %}
+            <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ link.path}}" height="475px"></iframe>
+        {% endfor %}
         <h1 class="h1 text-center">Проверка задания:</h1>
     {{ form_start(check_form) }}
     {{ form_widget(check_form) }}

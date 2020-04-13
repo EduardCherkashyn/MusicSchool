@@ -69,20 +69,21 @@ class Lesson
     private $markComment;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
-     */
-    private $youtubeLink;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\File", mappedBy="lessons")
      */
     private $files;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\YoutubeLink", mappedBy="lesson_id")
+     */
+    private $youtubeLinks;
 
 
 
     public function __construct()
     {
         $this->files = new ArrayCollection();
+        $this->youtubeLinks = new ArrayCollection();
     }
 
 
@@ -163,18 +164,6 @@ class Lesson
         return $this;
     }
 
-    public function getYoutubeLink(): ?string
-    {
-        return $this->youtubeLink;
-    }
-
-    public function setYoutubeLink(?string $youtubeLink): self
-    {
-        $this->youtubeLink = $youtubeLink;
-
-        return $this;
-    }
-
     /**
      * @return Collection|File[]
      */
@@ -198,6 +187,37 @@ class Lesson
         if ($this->files->contains($file)) {
             $this->files->removeElement($file);
             $file->removeLesson($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|YoutubeLink[]
+     */
+    public function getYoutubeLinks(): Collection
+    {
+        return $this->youtubeLinks;
+    }
+
+    public function addYoutubeLink(YoutubeLink $youtubeLink): self
+    {
+        if (!$this->youtubeLinks->contains($youtubeLink)) {
+            $this->youtubeLinks[] = $youtubeLink;
+            $youtubeLink->setLessonId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeYoutubeLink(YoutubeLink $youtubeLink): self
+    {
+        if ($this->youtubeLinks->contains($youtubeLink)) {
+            $this->youtubeLinks->removeElement($youtubeLink);
+            // set the owning side to null (unless already changed)
+            if ($youtubeLink->getLessonId() === $this) {
+                $youtubeLink->setLessonId(null);
+            }
         }
 
         return $this;

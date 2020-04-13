@@ -6,9 +6,9 @@ $(document).on('click', 'button.ajax', function(){
         }
         return false;
     }
-    if(matchYoutubeUrl($('#input').val())){
+    if(matchYoutubeUrl($('#input'+this.id).val())){
         that = $(this);
-        link = $('#input').val();
+        link = $("#input"+this.id).val();
         lesson = this.id;
         $.ajax({
             url:'/video_upload',
@@ -22,8 +22,12 @@ $(document).on('click', 'button.ajax', function(){
             success: function (data)
             {
                 console.log(data);
-                $('div#ajax-results').html('<iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="'+data.output+'" height="475px"></iframe>');
-                $('div#videoUpload').hide();
+                $('#ajax-results'+ lesson).append('<iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="'+data.output+'" height="475px"></iframe>');
+                if($('#ajax-results'+ lesson).children('iframe').length > 2){
+                    $('#videoUpload'+ lesson).hide();
+                }else{
+                    $('#input'+lesson).val("");
+                }
             },
             error: function () {
                 alert('Такое видео уже существует!!')
@@ -31,6 +35,7 @@ $(document).on('click', 'button.ajax', function(){
         return false;
     }
     else {
-        alert('Enter a valid youtube url!')
+        alert('Введите верную ютуб ссылку!')
     }
 });
+

@@ -12,6 +12,7 @@ use App\Entity\Lesson;
 use App\Entity\Student;
 use App\Entity\ScheduleLesson;
 use App\Entity\User;
+use App\Entity\YoutubeLink;
 use App\Form\StudentType;
 use App\Services\FileUploader;
 use App\Services\PasswordEditing;
@@ -166,15 +167,18 @@ class StudentController extends AbstractController
      */
     public function videoUploadAction(Request $request)
     {
-        if($this->getDoctrine()->getRepository(Lesson::class)->findOneBy(['youtubeLink'=>$request->get('data')])){
+        if($this->getDoctrine()->getRepository(YoutubeLink::class)->findOneBy(['path'=>$request->get('data')])){
             return new JsonResponse('',404);
         }
         $lesson = $this->getDoctrine()->getRepository(Lesson::class)->findOneBy(['id'=> $request->get('id')]);
-        $lesson->setYoutubeLink($request->get('data'));
+        $link = new YoutubeLink();
+        $link->setPath($request->get('data'));
+        $lesson->addYoutubeLink($link);
         $this->getDoctrine()->getManager()->persist($lesson);
+        $this->getDoctrine()->getManager()->persist($link);
         $this->getDoctrine()->getManager()->flush();
         $vsm = new VideoServiceMatcher();
-        $video = $vsm->parse($lesson->getYoutubeLink());
+        $video = $vsm->parse($link->getPath());
         $link = $video->getEmbedUrl();
 
         return new JsonResponse(['output' => $link]);

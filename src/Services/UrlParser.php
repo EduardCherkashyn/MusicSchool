@@ -27,10 +27,12 @@ class UrlParser
     {
         $vsm = new VideoServiceMatcher();
         foreach ($student->getLessonsArchive() as $lesson) {
-            if($lesson->getYoutubeLink()){
-            $video = $vsm->parse($lesson->getYoutubeLink());
-            $link = $video->getEmbedUrl();
-            $lesson->setYoutubeLink($link);
+            foreach ($lesson->getYoutubeLinks() as $link) {
+                if ($link->getPath()) {
+                    $video = $vsm->parse($link->getPath());
+                    $parsed = $video->getEmbedUrl();
+                    $link->setPath($parsed);
+                }
             }
         }
     }
@@ -38,9 +40,11 @@ class UrlParser
     public function parseOneLink(Lesson $lesson)
     {
         $vsm = new VideoServiceMatcher();
-        $video = $vsm->parse($lesson->getYoutubeLink());
-        $link = $video->getEmbedUrl();
-        $lesson->setYoutubeLink($link);
+        foreach($lesson->getYoutubeLinks() as $item) {
+            $video = $vsm->parse($item->getPath());
+            $link = $video->getEmbedUrl();
+            $item->setPath($link);
+        }
     }
 
     public function parseUrl() :array
