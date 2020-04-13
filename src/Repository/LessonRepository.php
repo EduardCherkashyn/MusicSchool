@@ -36,15 +36,12 @@ class LessonRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Lesson
+
+    public function getQueryLessonCrud()
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->addOrderBy('l.date', 'DESC')
+            ->getQuery();
     }
-    */
+
 }

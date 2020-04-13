@@ -38,8 +38,11 @@
         <div id="columnchart_values" class="{{ student.id }} w-100" style="height: 300px;"></div>
         <hr style="border: 3px solid #4B0082;">
         <h1 class="mt-5 ml-3 text-center mb-5">Домашние задания:</h1>
+        <div class="navigation">
+            {{ knp_pagination_render(lessons) }}
+        </div>
         <hr style="border: 3px solid #4B0082;">
-        {% for lesson in student.lessonsArchive|reverse %}
+        {% for lesson in lessons|reverse %}
             <div class="mb-3 ml-3 mr-3">
             <h1>Дата:</h1>
                 {{ lesson.date|date("m/d/Y") }}<br>
@@ -74,6 +77,9 @@
             </div>
             <hr style="border: 3px solid #4B0082;">
         {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(lessons) }}
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}
