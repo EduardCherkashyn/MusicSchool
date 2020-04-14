@@ -28,29 +28,29 @@
 
 
 </style>
-    <h1> Отчет класса Черкашина Александра Александровича за {{ year}}&nbsp;год месяц {{ month }}</h1>
+    <h1> Звіт класу Черкашина Олександра Олександровича за {{ year}}&nbsp;рік місяць {{ month }}</h1>
 
     <table id="table" cellspacing="0">
         <thead>
         <tr>
-            <th width="130px">Имя</th>
+            <th width="130px">Ім'я</th>
             <th width="100px">Дата</th>
-            <th width="500px">Задание</th>
-            <th width="200px">Комментарий</th>
-            <th width="10px">Оценка</th>
+            <th width="500px">Завдання</th>
+            <th width="200px">Коментар</th>
+            <th width="10px">Оцінка</th>
         </tr>
         </thead>
         <tbody>
     {% for lesson in data %}
         <tr>
             <td>{{ lesson.student.name }}</td>
-            <td>{{ lesson.date|date("m/d/Y") }}</td>
+            <td>{{ lesson.date|date("d/m/Y") }}</td>
             <td>{{ lesson.homework }}</td>
             <td>{{ lesson.markComment}}</td>
             <td>{{ lesson.mark}}</td>
         </tr>
         <tr>
-            <td colspan="5">Видео отчет:</td>
+            <td colspan="5">Відео звіт:</td>
         </tr>
         {% for link in lesson.youtubeLinks %}
                 <tr>
