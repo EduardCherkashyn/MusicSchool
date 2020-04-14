@@ -7,6 +7,7 @@ use App\Entity\Lesson;
 use App\Form\LessonEditType;
 use App\Form\LessonType;
 use App\Repository\LessonRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,9 +21,15 @@ class LessonCrudController extends AbstractController
     /**
      * @Route("/", name="lesson_index", methods="GET")
      */
-    public function index(LessonRepository $lessonRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, LessonRepository $lessonRepository): Response
     {
-        return $this->render('lesson/index.html.twig', ['lessons' => $lessonRepository->findBy([],['date'=>'DESC' ])]);
+        $pagination = $paginator->paginate(
+            $lessonRepository->getQueryLessonCrud(), /* query NOT result */
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('lesson/index.html.twig', ['lessons' => $pagination]);
     }
 
     /**

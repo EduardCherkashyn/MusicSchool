@@ -18,6 +18,7 @@ use App\Repository\StudentRepository;
 use App\Services\FileUploader;
 use App\Services\PasswordEditing;
 use App\Services\UrlParser;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
@@ -154,12 +155,17 @@ class StudentController extends AbstractController
     /**
      * @Route("/profile", name="studentProfile")
      */
-    public function profileAction(UrlParser $parser)
+    public function profileAction(Request $request, PaginatorInterface $paginator, UrlParser $parser)
     {
         $parser->parse($this->getUser()->getStudent());
-
+        $pagination = $paginator->paginate(
+            $this->getUser()->getStudent()->getLessonsArchive(), /* query NOT result */
+            $request->query->getInt('page', 1),
+            3
+        );
         return $this->render('StudentController/profile.html.twig', [
-            'student' => $this->getUser()->getStudent()
+            'student' => $this->getUser()->getStudent(),
+            'lessons' => $pagination
         ]);
     }
 

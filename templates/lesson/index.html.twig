@@ -6,7 +6,12 @@
     <div class="container pt-3 pb-3">
     <h1>Уроки</h1>
         <a href="{{ path('lesson_new') }}" class="btn btn-primary">Создать новый</a>
-
+        <div class="count">
+            <h1>Всего уроков:{{ lessons.getTotalItemCount }}</h1>
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(lessons) }}
+        </div>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -44,6 +49,8 @@
         {% endfor %}
         </tbody>
     </table>
-
+        <div class="navigation">
+            {{ knp_pagination_render(lessons) }}
+        </div>
     </div>
 {% endblock %}
