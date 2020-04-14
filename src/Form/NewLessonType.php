@@ -46,7 +46,7 @@ class NewLessonType extends AbstractType
             ])
             ->add('files',  EntityType::class,[
                 'class' => File::class,
-                'label' => 'Добавить файл',
+                'label' => 'Додати файл',
                 'choice_label' => 'name',
                 'choice_value' => function (File $entity) {
                     return $entity ? $entity->getId() : '';
@@ -56,7 +56,7 @@ class NewLessonType extends AbstractType
                  'mapped' => false
             ])
             ->add('homework', TextareaType::class,[
-                'label'=>'Задание:'
+                'label'=>'Завдання:'
             ]);
     }
 

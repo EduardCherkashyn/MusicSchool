@@ -5,9 +5,9 @@
 {% block body %}
     <div class="container pt-3 pb-3">
     <h1>Уроки</h1>
-        <a href="{{ path('lesson_new') }}" class="btn btn-primary">Создать новый</a>
+        <a href="{{ path('lesson_new') }}" class="btn btn-primary">Додати новий</a>
         <div class="count">
-            <h1>Всего уроков:{{ lessons.getTotalItemCount }}</h1>
+            <h1>Всього уроків:{{ lessons.getTotalItemCount }}</h1>
         </div>
         <div class="navigation">
             {{ knp_pagination_render(lessons) }}
@@ -17,11 +17,11 @@
             <tr>
                 <th>Дата</th>
                 <th>Студент</th>
-                <th>Задание</th>
-                <th>Посещаемость</th>
-                <th>Оценка</th>
-                <th>Коментарий</th>
-                <th>Действие</th>
+                <th>Завдання</th>
+                <th>Відвідування</th>
+                <th>Оцінка</th>
+                <th>Коментар</th>
+                <th>Дія</th>
             </tr>
         </thead>
         <tbody>
@@ -38,13 +38,13 @@
                 {% endif %}
                 <td>{{ lesson.markComment }}</td>
                 <td>
-                    <a href="{{ path('lesson_edit', {'id': lesson.id}) }}" class="btn btn-warning mb-3">редактировать</a>
+                    <a href="{{ path('lesson_edit', {'id': lesson.id}) }}" class="btn btn-warning mb-3">редагувати</a>
                     {{ include('lesson/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">нет записей</td>
+                <td colspan="8">немає записів</td>
             </tr>
         {% endfor %}
         </tbody>

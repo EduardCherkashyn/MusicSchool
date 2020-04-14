@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Проверить урок{% endblock %}
+{% block title %}Перевірити урок{% endblock %}
 {% block body %}
     <style>
         label{
@@ -11,17 +11,17 @@
             <li class="list-group-item"><h1>{{ student.name }}</h1></li>
             <li class="list-group-item"><h3>Дата:</h3></li>
             <li class="list-group-item">{{ lesson.date|date("m/d/Y")}}</li>
-            <li class="list-group-item"><h3>Задание:</h3></li>
+            <li class="list-group-item"><h3>Завдання:</h3></li>
             <li class="list-group-item">{{ lesson.homework }}</li>
         </ul>
         </br>
         {% for link in lesson.youtubeLinks %}
             <iframe class="d-block w-100 videos mt-3 mb-3" id="uploaded" frameborder="0" src="{{ link.path}}" height="475px"></iframe>
         {% endfor %}
-        <h1 class="h1 text-center">Проверка задания:</h1>
+        <h1 class="h1 text-center">Перевірка завдання:</h1>
     {{ form_start(check_form) }}
     {{ form_widget(check_form) }}
-    <input type="submit" class="btn-success" value="Подтвердить" name="Submit" />
+    <input type="submit" class="btn-success" value="Підтвердити" name="Submit" />
     {{ form_end(check_form)}}
     </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Главная{% endblock %}</title>
+        <title>{% block title %}Головна{% endblock %}</title>
         {% block stylesheets %}
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,58 +21,58 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_home') }}">Главная</a>
+                    <a class="nav-link" href="{{ path('app_home') }}">Головна</a>
                 </li>
                 {% if is_granted("ROLE_ADMIN") %}
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('studentProfile') }}">Мой кабинет</a>
+                        <a class="nav-link" href="{{ path('studentProfile') }}">Особистий кабінет</a>
                     </li>
                 {% endif %}
                 {% if is_granted("ROLE_ADMIN") %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ученик
+                        Учень
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('lessonsDueDay') }}">Расписание на сегодня </a>
-                        <a class="dropdown-item" href="{{ path('showStudents') }}">Список учеников </a>
-                        <a class="dropdown-item" href="{{ path('lesson_index') }}">Редактировать урок</a>
-                        <a class="dropdown-item" href="{{ path('addStudent') }}">Добавить нового ученика </a>
-                        <a class="dropdown-item" href="{{ path('lessonsDueWeek') }}">Расписание на неделю</a>
+                        <a class="dropdown-item" href="{{ path('lessonsDueDay') }}">Розклад на сьогодні </a>
+                        <a class="dropdown-item" href="{{ path('showStudents') }}">Список учнів </a>
+                        <a class="dropdown-item" href="{{ path('lesson_index') }}">Редагувати урок</a>
+                        <a class="dropdown-item" href="{{ path('addStudent') }}">Додати нового учня </a>
+                        <a class="dropdown-item" href="{{ path('lessonsDueWeek') }}">Розклад на тиждень</a>
                     </div>
                 </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Медиатека
+                            Медіатека
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                            <a class="dropdown-item" href="{{ path('video_index') }}">Видео</a>
+                            <a class="dropdown-item" href="{{ path('video_index') }}">Відео</a>
                             <a class="dropdown-item" href="{{ path('photo_index') }}">Фото</a>
-                            <a class="dropdown-item" href="{{ path('file_index') }}">Ноты</a>
+                            <a class="dropdown-item" href="{{ path('file_index') }}">Ноти</a>
 
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('dates_results') }}">Отчет</a>
+                        <a class="nav-link" href="{{ path('dates_results') }}">Звіт</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_video_gallery') }}">Видео</a>
+                    <a class="nav-link" href="{{ path('app_video_gallery') }}">Відео</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_photo_gallery') }}">Фото</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_contacts') }}">Контакты</a>
+                    <a class="nav-link" href="{{ path('app_contacts') }}">Контакти</a>
                 </li>
                 {% if is_granted("ROLE_USER") %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Выйти</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">Вихід</a>
                     </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_login') }}">Войти</a>
+                            <a class="nav-link" href="{{ path('app_login') }}">Вхід</a>
                         </li>
                 {% endif %}
             </ul>

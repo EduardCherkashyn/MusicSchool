@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Список видео{% endblock %}
+{% block title %}Список відео{% endblock %}
 
 {% block body %}
     <div class="container pt-3">
-    <h1>Список видео</h1>
+    <h1>Список відео</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>№</th>
-                <th>Видео</th>
-                <th>действие</th>
+                <th>Відео</th>
+                <th>Дія</th>
             </tr>
         </thead>
         <tbody>
@@ -25,12 +25,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">нет доступных видео</td>
+                <td colspan="3">немає доступних відео</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('video_new') }}" class="btn btn-warning">Добавить видео</a>
+    <a href="{{ path('video_new') }}" class="btn btn-warning">Додати відео</a>
     </div>
 {% endblock %}
