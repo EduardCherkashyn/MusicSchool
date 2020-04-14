@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Редактировать ученика{% endblock %}
+{% block title %}Редагувати учня{% endblock %}
 
   {% block body %}
       <style>
@@ -14,18 +14,18 @@
           {% else %}
                 <img class="mb-3" src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
           {% endif %}
-          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary  btn-block" role="button">Успеваемость ученика <i class="fas fa-award"></i></a>
+          <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary  btn-block" role="button">Успішність учня</a>
           {{form_start(edit_form)}}
           {{ form_row(edit_form.name) }}
           {{ form_row(edit_form.email) }}
       {{ form_row(edit_form.phone) }}
           {{ form_row(edit_form.avatar) }}
-          <h2>Первый урок:</h2>
+          <h2>Перший урок:</h2>
       {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
-      <h2>Второй урок:</h2>
+      <h2>Другий урок:</h2>
       {{ form_row(edit_form.lessons.1,{'attr':{'class':'lesson'}}) }}
-          <button type="submit" class="btn btn-success" value="Edit info" name="Submit" onclick="return confirm('Are u sure?')">Сохранить <i class="fas fa-user-edit"></i></button>
-      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger" onclick="return confirm('Are u sure?')">Удалить ученика <i class="fas fa-trash"></i></a>
+          <button type="submit" class="btn btn-success" value="Edit info" name="Submit" onclick="return confirm('Ви підтверджуете зміни?')">Зберегти</button>
+      <a href="{{ path('deleteStudent',({'id':student.id})) }}" class="btn btn-danger" onclick="return confirm('Видалити данного учня?')">Видалити</a>
       {{ form_end(edit_form) }}
       </div>
   {% endblock %}

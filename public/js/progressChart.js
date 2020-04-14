@@ -22,12 +22,12 @@ $.ajax({
 
             var data = google.visualization.arrayToDataTable(array);
             var options = {
-                title: 'Прогресс занятий',
+                title: 'Прогрес занять',
                 hAxis: {
-                    title: 'Дата урока'
+                    title: 'Дата уроку'
                 },
                 vAxis: {
-                    title: 'Оценка',
+                    title: 'Оцінка',
                     minValue: 1,
                     ticks: [2,4,6,8,10,12]
                 }

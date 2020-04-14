@@ -24,14 +24,14 @@ class LessonEditType extends AbstractType
                 'label' => 'Дата'
             ])
             ->add('homework',TextareaType::class,[
-                'label'=>'Задание',
+                'label'=>'Завдання',
                 'attr' => ['rows' => '10']
             ])
             ->add('attendance',CheckboxType::class, [
                 'required' => false,
-                'label' => 'Посещение'])
+                'label' => 'Відвідування'])
             ->add('mark', ChoiceType::class,[
-                'label'=>'Оценка',
+                'label'=>'Оцінка',
                 'choices'  => [
                     '1' => 1,
                     '2' => 2,
@@ -48,16 +48,16 @@ class LessonEditType extends AbstractType
                 ],
             ])
             ->add('markComment',TextType::class,[
-                'label' => 'Комментарий',
+                'label' => 'Коментар',
                 'required'=> false
             ])
             ->add('youtubeLinks',CollectionType::class,[
                 'entry_type' => YoutubeLinkType::class,
-                'label' => 'Ютуб ссылка'
+                'label' => 'Ютуб посилання'
             ])
             ->add('student',EntityType::class,[
                 'class' => Student::class,
-                'label' => 'Добавить студента',
+                'label' => 'Додати учня',
                 'choice_label' => 'name'
             ])
         ;

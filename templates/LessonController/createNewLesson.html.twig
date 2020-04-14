@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Новый урок{% endblock %}
+{% block title %}Новий урок{% endblock %}
 {% block body %}
     <style>
         label{
@@ -7,10 +7,10 @@
         }
     </style>
     <div class="container">
-    <h1 class="pt-5 pb-5">Имя ученика:  {{ student.name }}</h1>
+    <h1 class="pt-5 pb-5">Ім'я учня:  {{ student.name }}</h1>
 {{ form_start(create_lesson) }}
    {{ form_widget(create_lesson) }}
-    <input type="submit" class="btn-success" value="Подтвердить" name="Submit" />
+    <input type="submit" class="btn-success" value="Підтвердити" name="Submit" />
     {{ form_end(create_lesson) }}
     </div>
 {% endblock %}

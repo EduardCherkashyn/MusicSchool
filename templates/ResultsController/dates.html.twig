@@ -1,9 +1,35 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="container pt-5">
-        <h1>Доступные даты для отчета:</h1>
+        <h1>Доступні дати для звіту:</h1>
     {% for date in dates%}
-        <a href="{{ path('generate_results',{year: date.year ,month: date.month }) }}"><p>{{ date.year }}&nbsp;{{ date.month }}</p></a>
+        <a href="{{ path('generate_results',{year: date.year ,month: date.month }) }}"><p>{{ date.year }}&nbsp;
+            {% if date.month == 'January' %}
+                Січень
+            {% elseif date.month == 'February' %}
+                Лютий
+            {% elseif date.month == 'March' %}
+                Березень
+            {% elseif date.month == 'April' %}
+                Квітень
+            {% elseif date.month == 'May' %}
+                Травень
+            {% elseif date.month == 'June' %}
+                Червень
+            {% elseif date.month == 'July' %}
+                Липень
+            {% elseif date.month == 'August' %}
+                Серпень
+            {% elseif date.month == 'September' %}
+                Вересень
+            {% elseif date.month == 'October' %}
+                Жовтень
+            {% elseif date.month == 'November' %}
+                Листопад
+            {% else %}
+                Грудень
+            {% endif %}
+            </p></a>
     {% endfor %}
     </div>
 {% endblock %}

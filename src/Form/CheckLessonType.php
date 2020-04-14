@@ -17,10 +17,10 @@ class CheckLessonType extends AbstractType
         $builder
             ->add('attendance', CheckboxType::class, [
                 'required' => false,
-                'label' => 'Посещение:'
+                'label' => 'Відвідування:'
             ])
             ->add('mark', ChoiceType::class,[
-                'label'=>'Оценка',
+                'label'=>'Оцінка',
                 'choices'  => [
                     '1' => 1,
                     '2' => 2,
@@ -38,7 +38,7 @@ class CheckLessonType extends AbstractType
             ])
             ->add('markComment', TextareaType::class,[
                 'required' => false,
-                'label'=>'Комментарий:'
+                'label'=>'Коментар:'
             ])
 
         ;

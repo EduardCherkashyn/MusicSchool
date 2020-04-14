@@ -11,7 +11,7 @@
             <tr>
                 <th>№</th>
                 <th>Фото</th>
-                <th>Действия</th>
+                <th>Дія</th>
             </tr>
         </thead>
         <tbody>
@@ -25,12 +25,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">фото еще не добавлены</td>
+                <td colspan="3">немає доступних фото</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('photo_new') }}" class="btn btn-warning">Добавить фото</a>
+    <a href="{{ path('photo_new') }}" class="btn btn-warning">Додати фото</a>
     </div>
 {% endblock %}

@@ -47,7 +47,7 @@ class LessonController extends AbstractController
             if ($lesson->getAttendance() === null) {
                 $this->addFlash(
                     'notice',
-                    'Проверьте прошлый урок !'
+                    'Перевірте попередній урок !'
                 );
                 return $this->redirectToRoute('lessonsDueDay');
             }
@@ -86,7 +86,7 @@ class LessonController extends AbstractController
         if($lesson === null || $lesson->getAttendance() !== null) {
             $this->addFlash(
                     'notice',
-                    'Урок еще не создан!'
+                    'Урок ще не створений!'
                 );
             return $this->redirectToRoute('lessonsDueDay');
         }

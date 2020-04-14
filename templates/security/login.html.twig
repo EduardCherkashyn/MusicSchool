@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Логин{% endblock %}
+{% block title %}Логін{% endblock %}
 
 {% block body %}
     <div class="container pt-3">
@@ -8,14 +8,14 @@
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-    <h1 class="h3 mb-3 font-weight-normal">Ваш логин и пароль</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-3" placeholder="Имейл" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
+    <h1 class="h3 mb-3 font-weight-normal">Ваш логін та пароль</h1>
+    <label for="inputEmail" class="sr-only">Імейл</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-3" placeholder="Імейл" required autofocus>
+    <label for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" name="password" id="inputPassword" class="form-control mb-3" placeholder="Пароль" required>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     <button class="btn btn-lg btn-success" type="submit">
-        Подтвердить
+        Підтвердити
     </button>
 </form>
     </div>

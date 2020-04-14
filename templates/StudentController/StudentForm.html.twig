@@ -1,21 +1,21 @@
 {%extends 'base.html.twig'%}
 {% form_theme register_form 'bootstrap_4_layout.html.twig' %}
 
-{% block title %}Registration{% endblock %}
+{% block title %}Регістрація{% endblock %}
 
  {% block body %}
      <div class="container" >
      {{ form_start (register_form,{'attr':{'id':'custom_post_form'}})}}
-    <h1>Новый ученик</h1>
+    <h1>Новий учень</h1>
          {{ form_row(register_form.name) }}
          {{ form_row(register_form.avatar) }}
          {{ form_row(register_form.email) }}
          {{ form_row(register_form.phone) }}
-         <h2>Первый урок:</h2>
+         <h2>Перший урок:</h2>
          {{ form_row(register_form.lessons.0,{'attr':{'class':'lesson'}}) }}
-         <h2>Второй урок:</h2>
+         <h2>Другий урок:</h2>
          {{ form_row(register_form.lessons.1,{'attr':{'class':'lesson'}}) }}
-     <input type="submit" class="btn-success" value="Добавить" name="Submit" />
+     <input type="submit" class="btn-success" value="Зберегти" name="Submit" />
 {{ form_end(register_form) }}
      </div>
  {% endblock %}

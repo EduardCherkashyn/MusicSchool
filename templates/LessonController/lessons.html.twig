@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Расписание на сегодня{% endblock %}
+{% block title %}Розклад на сьогодні{% endblock %}
 {% block body %}
     <div class="container" style="background-color: #E6E6FA">
     <table  class="table table-hover">
@@ -10,26 +10,26 @@
         {% endfor %}
         <tr>
             <th>День</th>
-            <th>Время</th>
+            <th>Час</th>
             <th>Аватар</th>
-            <th>Имя</th>
-            <th>Задать задание</th>
-            <th>Проверить задание</th>
+            <th>Ім'я</th>
+            <th>Дати завдання</th>
+            <th>Перевірити завдання</th>
         </tr>
         {% for lesson in lesssons %}
         <tr>
             {% if lesson.dayOfTheWeek == 1  %}
-                <td>Понедельник</td>
+                <td>Понеділок</td>
             {% elseif lesson.dayOfTheWeek == 2  %}
-                <td>Вторник</td>
+                <td>Вівторок</td>
             {% elseif lesson.dayOfTheWeek == 3  %}
-                <td>Среда</td>
+                <td>Середа</td>
             {% elseif lesson.dayOfTheWeek == 4  %}
-                <td>Четверг</td>
+                <td>Четвер</td>
             {% elseif lesson.dayOfTheWeek == 5  %}
-                <td>Пятница</td>
+                <td>П'ятниця</td>
             {% elseif lesson.dayOfTheWeek == 6  %}
-                <td>Суббота</td>
+                <td>Субота</td>
             {% endif %}
             <td>{{ lesson.time|date('H:i') }}</td>
             {% if lesson.student.avatar is null%}
@@ -38,8 +38,8 @@
                 <td><img src="{{ asset('avatars/' ~ lesson.student.avatar) }}" alt="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" ></td>
             {% endif %}
             <td>{{ lesson.student.name }}</td>
-            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-outline-primary btn-lg btn-block" role="button">Задать задание</a></td>
-            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-outline-success btn-lg btn-block" role="button">Проверить задание</a></td>
+            <td><a href="{{path('createLesson',({'id':lesson.student.id}))}}" class="btn btn-outline-primary btn-lg btn-block" role="button">Дати завдання</a></td>
+            <td><a href="{{path('checkLesson',({'id':lesson.student.id}))}}" class="btn btn-outline-success btn-lg btn-block" role="button">Перевірити завдання</a></td>
         </tr>
         {% endfor %}
     </table>

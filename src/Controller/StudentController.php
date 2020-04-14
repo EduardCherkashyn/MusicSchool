@@ -200,7 +200,7 @@ class StudentController extends AbstractController
         $student = $studentRepository->findOneBy(['id'=> $request->get('student')]);
         $lessons = $student->getLessonsArchive();
         $data = [];
-        $data[0] = ['Дата', 'Оценка' ];
+        $data[0] = ['Дата', 'Оцінка' ];
         $i = 1;
         /** @var Lesson $lesson */
         foreach ($lessons as $lesson){

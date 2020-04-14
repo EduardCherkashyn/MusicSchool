@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Контакты{% endblock %}
+{% block title %}Контакти{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
@@ -8,13 +8,13 @@
 {% block body %}
     <div class="container pt-5 mt-0">
         <h2 class="mb-5">
-            Черкашин Александр Александрович
+            Черкашин Олександр Олександрович
         </h2>
         <p>Моб.тел. +38(093) 020 70 68 (life)</p>
         <a href="https://www.facebook.com/profile.php?id=100000548100764&ref=br_tf&epa=SEARCH_BOX" ><img src="{{ asset('images/facebook.png') }}"></a>
         <a href="https://www.youtube.com/channel/UCu16dxLWecjLIE0uWWrb_fw" ><img width="50px" height="50px" src="{{ asset('images/youtube.png') }}"></a>
         <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
-    <h2 class="mb-5 mt-5">Украина, г. Черкассы, ул. Байды Вишневецкого, 33</h2>
+    <h2 class="mb-5 mt-5">Україна, м. Черкаси, вул. Байди Вишневецького, 33</h2>
     <div id="map" class="map"></div>
     <script type="text/javascript">
         var map = new ol.Map({

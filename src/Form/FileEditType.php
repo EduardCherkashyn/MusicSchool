@@ -20,7 +20,7 @@ class FileEditType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,[
-                    'label' => 'Имя файла:',
+                    'label' => 'Ім\'я файлу:',
                     'required' => true
                 ]
             )

@@ -21,17 +21,17 @@ class LessonType extends AbstractType
                 'label' => 'Дата'
             ])
             ->add('homework',TextareaType::class,[
-                'label'=>'Задание',
+                'label'=>'Завдання',
                 'attr' => ['rows' => '10']
             ])
             ->add('student',EntityType::class,[
                 'class' => Student::class,
-                'label' => 'Имя студента',
+                'label' => 'Ім\'я учня',
                 'choice_label' => 'name'
             ])
             ->add('files',  EntityType::class,[
                 'class' => File::class,
-                'label' => 'Добавить файл',
+                'label' => 'Додати файл',
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,

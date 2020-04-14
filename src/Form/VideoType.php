@@ -14,7 +14,7 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('link',TextType::class,[
-                'label'=>'Добавить ссылку:',
+                'label'=>'Додати посилання:',
             ])
         ;
     }
