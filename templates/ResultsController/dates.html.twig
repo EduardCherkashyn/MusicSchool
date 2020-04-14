@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container pt-5">
+        <h1>Доступные даты для отчета:</h1>
+    {% for date in dates%}
+        <a href="{{ path('generate_results',{year: date.year ,month: date.month }) }}"><p>{{ date.year }}&nbsp;{{ date.month }}</p></a>
+    {% endfor %}
+    </div>
+{% endblock %}

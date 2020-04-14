@@ -44,4 +44,27 @@ class LessonRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    public function getAvailableDatesForResults()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT YEAR(lesson.date) as year, MONTHNAME(lesson.date) as month from lesson GROUP BY year, month';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public function getLessonsForResults($year, $month)
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('YEAR(l.date) = ?1')
+            ->andWhere('MONTHNAME(l.date) = ?2')
+            ->addOrderBy('l.student', 'DESC')
+            ->setParameter(1, $year)
+            ->setParameter(2,$month)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
