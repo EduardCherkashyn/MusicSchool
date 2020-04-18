@@ -67,4 +67,13 @@ class LessonRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getStudentLesson($studendId)
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.student = ?1')
+            ->addOrderBy('l.date', 'DESC')
+            ->setParameter(1, $studendId)
+            ->getQuery();
+    }
+
 }

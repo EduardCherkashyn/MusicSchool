@@ -27,20 +27,17 @@ class NewLessonType extends AbstractType
         foreach ($lessons as $lesson) {
             $studLessons[] = $lesson->getDayOfTheWeek();
         }
-        $firstLesson = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[0]])));
-        $secondLesson = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[1]])));
-        $firstLesson2 = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[0]])));
-        $secondLesson2 = new \DateTime(date('Y-m-d', strtotime($days[$studLessons[1]])));
-        $firstLesson2->modify('+7 days');
-        $secondLesson2->modify('+7 days');
+        $result = 0;
+        if (date('l') === $days[$studLessons[0]]) {
+            $result =  new \DateTime(date('Y-m-d', strtotime($days[$studLessons[1]])));
+        } else {
+            $result =  new \DateTime(date('Y-m-d', strtotime($days[$studLessons[0]])));
+        }
 
         $builder
             ->add('date', ChoiceType::class, [
                 'choices' => [
-                    $firstLesson->format('Y-m-d') => $firstLesson,
-                    $secondLesson->format('Y-m-d') => $secondLesson,
-                    $firstLesson2->format('Y-m-d') => $firstLesson2,
-                    $secondLesson2->format('Y-m-d') => $secondLesson2,
+                      $result->format('d-m-Y') => $result
                 ],
                 'label'=>'Дата:'
             ])
