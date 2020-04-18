@@ -14,6 +14,7 @@ use App\Entity\ScheduleLesson;
 use App\Entity\User;
 use App\Entity\YoutubeLink;
 use App\Form\StudentType;
+use App\Repository\LessonRepository;
 use App\Repository\StudentRepository;
 use App\Services\FileUploader;
 use App\Services\PasswordEditing;
@@ -155,11 +156,11 @@ class StudentController extends AbstractController
     /**
      * @Route("/profile", name="studentProfile")
      */
-    public function profileAction(Request $request, PaginatorInterface $paginator, UrlParser $parser)
+    public function profileAction(Request $request, PaginatorInterface $paginator, UrlParser $parser, LessonRepository $lessonRepository)
     {
         $parser->parse($this->getUser()->getStudent());
         $pagination = $paginator->paginate(
-            $this->getUser()->getStudent()->getLessonsArchive(), /* query NOT result */
+            $lessonRepository->getStudentLesson($this->getUser()->getStudent()->getId()), /* query NOT result */
             $request->query->getInt('page', 1),
             3
         );

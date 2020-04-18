@@ -42,7 +42,7 @@
             {{ knp_pagination_render(lessons) }}
         </div>
         <hr style="border: 3px solid #4B0082;">
-        {% for lesson in lessons|reverse %}
+        {% for lesson in lessons %}
             <div class="mb-3 ml-3 mr-3">
             <h1>Дата:</h1>
                 {{ lesson.date|date("m/d/Y") }}<br>
@@ -55,6 +55,7 @@
                     {% endfor %}
                 {% endif %}
                 {% if lesson.youtubeLinks|length < 3 %}
+                    {% if lesson.mark is null %}
                     <div id="videoUpload{{ lesson.id }}">
                         <h1>Завантажити відео з ютуб (не більше 3-х):</h1>
                         <div class="input-group mb-3">
@@ -64,6 +65,7 @@
                             </div>
                         </div>
                     </div>
+                        {% endif %}
                 {% endif %}
                 <div id="ajax-results{{ lesson.id }}">
                     {% for link in lesson.youtubeLinks  %}
