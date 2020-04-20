@@ -23,8 +23,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_home') }}">Головна</a>
                 </li>
+                {% if is_granted("ROLE_S_ADMIN")%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('teacher_index') }}">Список вчителів</a>
+                    </li>
+                {% endif %}
                 {% if is_granted("ROLE_ADMIN") %}
-                {% else %}
+                {% elseif is_granted("ROLE_S_ADMIN")%}
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('studentProfile') }}">Особистий кабінет</a>
                     </li>
@@ -57,12 +63,14 @@
                         <a class="nav-link" href="{{ path('dates_results') }}">Звіт</a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_video_gallery') }}">Відео</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_photo_gallery') }}">Фото</a>
-                </li>
+                {% if is_granted("ROLE_USER") %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_video_gallery') }}">Відео</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_photo_gallery') }}">Фото</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_contacts') }}">Контакти</a>
                 </li>

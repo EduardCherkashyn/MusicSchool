@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вчитель{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+        <h1>Список вчителів</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Ім'я</th>
+                    <th>Тип</th>
+                    <th>Дія</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.id }}</td>
+                    <td>{{ teacher.name }}</td>
+                    <td>{{ teacher.type }}</td>
+                    <td>
+                        <a href="{{ path('teacher_show', {'id': teacher.id}) }}" class="btn btn-primary">показати</a>
+                        <a href="{{ path('teacher_edit', {'id': teacher.id}) }}" class="btn btn-warning">редагувати</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">немає записів</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('teacher_new') }}" class="btn btn-success">Додати нового</a>
+    </div>
+{% endblock %}

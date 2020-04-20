@@ -42,8 +42,14 @@ class StaticPagesController extends AbstractController
      */
     public function videoPageAction(UrlParser $urlParser)
     {
+        if(in_array("ROLE_ADMIN", $this->getUser()->getRoles())){
+           $videos = $urlParser->parseUrl($this->getUser()->getTeacher());
+        } else{
+            $videos = $urlParser->parseUrl($this->getUser()->getStudent()->getTeacher());
+        }
+
         return $this->render('StaticPagesController/video.html.twig',[
-            'videos' => $urlParser->parseUrl()
+            'videos' => $videos
         ]);
     }
 
@@ -52,8 +58,13 @@ class StaticPagesController extends AbstractController
      */
     public function photoPageAction(PhotoRepository $photoRepository)
     {
+        if(in_array("ROLE_ADMIN", $this->getUser()->getRoles())){
+            $teacher = $this->getUser()->getTeacher();
+        } else{
+            $teacher = $this->getUser()->getStudent()->getTeacher();
+        }
         return $this->render('StaticPagesController/photo.html.twig',[
-            'photos' => $photoRepository->findBy([],['id'=>'DESC'])
+            'photos' => $photoRepository->findBy(['teacher' => $teacher],['id'=>'DESC'])
         ]);
     }
 }

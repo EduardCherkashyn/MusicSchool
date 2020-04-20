@@ -24,7 +24,7 @@ class LessonCrudController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator, LessonRepository $lessonRepository): Response
     {
         $pagination = $paginator->paginate(
-            $lessonRepository->getQueryLessonCrud(), /* query NOT result */
+            $lessonRepository->getQueryLessonCrud($this->getUser()->getTeacher()), /* query NOT result */
             $request->query->getInt('page', 1),
             10
         );

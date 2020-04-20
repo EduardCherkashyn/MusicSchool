@@ -71,9 +71,10 @@ class ResultsController extends  AbstractController
 
             // Retrieve the HTML generated in our twig file
         $html = $this->renderView('ResultsController/index.html.twig', [
-            'data' => $lessonRepository->getLessonsForResults($year,$month),
+            'data' => $lessonRepository->getLessonsForResults($year,$month,$this->getUser()->getTeacher()),
             'year' => $year,
-            'month'=> $monthToshow
+            'month'=> $monthToshow,
+            'name' => $this->getUser()->getTeacher()->getName()
         ]);
         // Load HTML to Dompdf
         $dompdf->loadHtml($html);
@@ -85,7 +86,7 @@ class ResultsController extends  AbstractController
         $dompdf->render();
 
         // Output the generated PDF to Browser (force download)
-        $dompdf->stream('отчет'.$year.$monthToshow, [
+        $dompdf->stream('звіт'.$year.$monthToshow, [
             'Attachment' => true
         ]);
         die();
@@ -96,7 +97,7 @@ class ResultsController extends  AbstractController
      */
     public function getAvailableDatesAction()
     {
-        $results = $this->getDoctrine()->getRepository(Lesson::class)->getAvailableDatesForResults();
+        $results = $this->getDoctrine()->getRepository(Lesson::class)->getAvailableDatesForResults($this->getUser()->getTeacher()->getId());
 
         return $this->render('ResultsController/dates.html.twig',[
            'dates'=> $results

@@ -45,6 +45,7 @@ class StudentController extends AbstractController
         $lesson2 = new ScheduleLesson();
         $student->addLesson($lesson);
         $student->addLesson($lesson2);
+        $student->setTeacher($this->getUser()->getTeacher());
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -136,7 +137,7 @@ class StudentController extends AbstractController
     public function showAllAction()
     {
         $repository = $this->getDoctrine()->getRepository(Student::class);
-        $students = $repository->findBy([],['name' => 'ASC']);
+        $students = $repository->findBy(['teacher'=>$this->getUser()->getTeacher()->getId()],['name' => 'ASC']);
 
         return $this->render('StudentController/showAllStudents.html.twig', [
           'students' => $students

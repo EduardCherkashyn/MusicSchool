@@ -47,10 +47,10 @@ class UrlParser
         }
     }
 
-    public function parseUrl() :array
+    public function parseUrl($teacher) :array
     {
         $vsm = new VideoServiceMatcher();
-        $videos = $this->videoRepository->findBy([],['id' => 'DESC']);
+        $videos = $this->videoRepository->findBy(['teacher'=> $teacher],['id' => 'DESC']);
         foreach($videos as $videoObj){
             $video = $vsm->parse($videoObj->getLink());
             $link = $video->getEmbedUrl();

@@ -23,7 +23,7 @@ class PhotoController extends AbstractController
      */
     public function index(PhotoRepository $photoRepository): Response
     {
-        return $this->render('photo/index.html.twig', ['photos' => $photoRepository->findBy([],['id'=>'DESC'])]);
+        return $this->render('photo/index.html.twig', ['photos' => $photoRepository->findBy(['teacher'=>$this->getUser()->getTeacher()],['id'=>'DESC'])]);
     }
 
     /**
@@ -32,6 +32,7 @@ class PhotoController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         $photo = new Photo();
+        $photo->setTeacher($this->getUser()->getTeacher());
         $form = $this->createForm(PhotoType::class, $photo);
         $form->handleRequest($request);
 

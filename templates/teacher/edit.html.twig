@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редагувати вчителя{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+        <h1>Редагувати вчителя</h1>
+
+        {{ include('teacher/_form.html.twig', {'button_label': 'Редагувати'}) }}
+
+        <a href="{{ path('teacher_index') }}" class="btn btn-primary mt-2">до списку</a>
+
+        {{ include('teacher/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

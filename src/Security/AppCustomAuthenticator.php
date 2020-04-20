@@ -84,6 +84,9 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
         if(in_array("ROLE_ADMIN", $token->getUser()->getRoles())){
             return new RedirectResponse('/admin');
         }
+        if(in_array("ROLE_S_ADMIN", $token->getUser()->getRoles())){
+            return new RedirectResponse('/sadmin/teacher');
+        }
 
         return new RedirectResponse('/profile');
     }

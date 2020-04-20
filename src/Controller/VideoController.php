@@ -20,7 +20,7 @@ class VideoController extends AbstractController
      */
     public function index(UrlParser $urlParser): Response
     {
-        return $this->render('video/index.html.twig', ['videos' => $urlParser->parseUrl()]);
+        return $this->render('video/index.html.twig', ['videos' => $urlParser->parseUrl($this->getUser()->getTeacher())]);
     }
 
     /**
@@ -29,6 +29,7 @@ class VideoController extends AbstractController
     public function new(Request $request): Response
     {
         $video = new Video();
+        $video->setTeacher($this->getUser()->getTeacher());
         $form = $this->createForm(VideoType::class, $video);
         $form->handleRequest($request);
 

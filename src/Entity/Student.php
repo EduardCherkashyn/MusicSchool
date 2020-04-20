@@ -54,6 +54,11 @@ class Student
      */
     private $avatar;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="students")
+     */
+    private $teacher;
+
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
@@ -175,6 +180,18 @@ class Student
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

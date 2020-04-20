@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Додати вчителя{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+        <h1>Додати нового вчителя</h1>
+
+        {{ include('teacher/_form.html.twig') }}
+
+        <a href="{{ path('teacher_index') }}" class="btn btn-primary mt-2">до списку</a>
+    </div>
+{% endblock %}
