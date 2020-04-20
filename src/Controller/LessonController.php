@@ -96,6 +96,9 @@ class LessonController extends AbstractController
         $form = $this->createForm(CheckLessonType::class, $lesson);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if($lesson->getAttendance() === false){
+              $lesson->setMark(null);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($lesson);
             $em->flush();
