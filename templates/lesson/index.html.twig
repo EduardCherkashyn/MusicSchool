@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Уроки{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 {% block body %}
     <div class="container pt-3 pb-3">
     <h1>Уроки</h1>
         <a href="{{ path('lesson_new') }}" class="btn btn-primary">Додати новий</a>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-warning mb-3 edit">{{ button_label|default('Пошук') }}</button>
+        {{ form_end(form) }}
+
         <div class="count">
             <h1>Всього уроків:{{ lessons.getTotalItemCount }}</h1>
         </div>

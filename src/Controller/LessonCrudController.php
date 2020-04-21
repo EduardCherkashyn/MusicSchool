@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\File;
 use App\Entity\Lesson;
+use App\Form\FilterType;
 use App\Form\LessonEditType;
 use App\Form\LessonType;
 use App\Repository\LessonRepository;
@@ -19,17 +20,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class LessonCrudController extends AbstractController
 {
     /**
-     * @Route("/", name="lesson_index", methods="GET")
+     * @Route("/", name="lesson_index")
      */
     public function index(Request $request, PaginatorInterface $paginator, LessonRepository $lessonRepository): Response
     {
+        if($student = $request->request->get('filter')['student']){
+            $pagination = $paginator->paginate(
+                $lessonRepository->getStudentLesson($student), /* query NOT result */
+                $request->query->getInt('page', 1),
+                10
+            );
+        } else {
         $pagination = $paginator->paginate(
             $lessonRepository->getQueryLessonCrud(), /* query NOT result */
             $request->query->getInt('page', 1),
-            10
-        );
+            10);
+        }
+        $form = $this->createForm(FilterType::class);
+        $form->handleRequest($request);
 
-        return $this->render('lesson/index.html.twig', ['lessons' => $pagination]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->redirectToRoute('lesson_index');
+        }
+        return $this->render('lesson/index.html.twig', [
+            'lessons' => $pagination,
+            'form' => $form->createView()
+            ]);
     }
 
     /**
