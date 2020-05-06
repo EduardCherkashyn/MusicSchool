@@ -18,10 +18,8 @@ services:
       - 80:80
     tty: true
     working_dir: /app
-    # environment:
-    #  XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
-    #  PHP_IDE_CONFIG: "serverName=Docker"
-
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
   music_school_mysql:
     image: mysql:5.7
     container_name: music_school_mysql
