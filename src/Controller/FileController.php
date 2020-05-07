@@ -34,6 +34,7 @@ class FileController extends AbstractController
     public function new(Request $request, AmazonService $amazonService): Response
     {
         $file = new File();
+        $file->setTeacher($this->getUser()->getTeacher());
         $form = $this->createForm(FileType::class, $file);
         $form->handleRequest($request);
 

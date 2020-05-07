@@ -31,7 +31,7 @@ class LessonController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
 
         return $this->render('LessonController/lessons.html.twig', [
-            'lesssons' => $repository->findBy(['dayOfTheWeek' => date('w')],['time' => 'ASC'])
+               'lesssons' => $repository->findByTeacherFieldLessonDueDay($this->getUser()->getTeacher(),date('w'))
         ]);
     }
 
@@ -96,6 +96,9 @@ class LessonController extends AbstractController
         $form = $this->createForm(CheckLessonType::class, $lesson);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if($lesson->getAttendance() === false){
+              $lesson->setMark(null);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($lesson);
             $em->flush();
@@ -116,7 +119,7 @@ class LessonController extends AbstractController
     public function scheduleAction(ScheduleSorting $sorting)
     {
         $repository = $this->getDoctrine()->getRepository(ScheduleLesson::class);
-        $lessons = $sorting->sort($repository->findBy([],['dayOfTheWeek' => 'ASC','time' => 'ASC']));
+        $lessons = $sorting->sort($repository->findByTeacherField($this->getUser()->getTeacher()));
 
         return $this->render('LessonController/schedule.html.twig', [
             'lessons' => $lessons

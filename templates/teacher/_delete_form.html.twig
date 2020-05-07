@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('teacher_delete', {'id': teacher.id}) }}" onsubmit="return confirm('Ви впевнені?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ teacher.id) }}">
+    <button class="btn btn-danger mt-2">видалити</button>
+</form>

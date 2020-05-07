@@ -21,6 +21,12 @@ class Photo
      */
     private $path;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="photos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $teacher;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +40,18 @@ class Photo
     public function setPath(string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

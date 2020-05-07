@@ -22,6 +22,7 @@ class CheckLessonType extends AbstractType
             ->add('mark', ChoiceType::class,[
                 'label'=>'Оцінка',
                 'choices'  => [
+                    '0' => 0,
                     '1' => 1,
                     '2' => 2,
                     '3' => 3,

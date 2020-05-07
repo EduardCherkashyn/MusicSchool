@@ -37,32 +37,39 @@ class LessonRepository extends ServiceEntityRepository
     */
 
 
-    public function getQueryLessonCrud()
+    public function getQueryLessonCrud($teacherId)
     {
         return $this->createQueryBuilder('l')
+            ->andWhere('s.teacher= ?1')
+            ->leftJoin('l.student','s')
             ->addOrderBy('l.date', 'DESC')
+            ->setParameter('1',$teacherId)
             ->getQuery();
     }
 
-    public function getAvailableDatesForResults()
+    public function getAvailableDatesForResults($teacherId)
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT YEAR(lesson.date) as year, MONTHNAME(lesson.date) as month from lesson GROUP BY year, month';
+        $sql = 'SELECT YEAR(lesson.date) as year, MONTHNAME(lesson.date) as month from lesson JOIN (SELECT id from student as s where s.teacher_id=:teacherId) as stud ON lesson.student_id=stud.id  GROUP BY year, month';
         $stmt = $conn->prepare($sql);
+        $stmt->bindValue('teacherId',$teacherId);
         $stmt->execute();
 
         return $stmt->fetchAll();
     }
-
-    public function getLessonsForResults($year, $month)
+//SELECT YEAR(lesson.date) as year, MONTHNAME(lesson.date) as month from lesson JOIN (SELECT id from student as s where s.teacher_id=3) as stud ON lesson.student_id=stud.id GROUP BY year, month;
+    public function getLessonsForResults($year, $month, $teacher)
     {
         return $this->createQueryBuilder('l')
             ->andWhere('YEAR(l.date) = ?1')
             ->andWhere('MONTHNAME(l.date) = ?2')
+            ->andWhere('s.teacher= ?3')
+            ->leftJoin('l.student','s')
             ->addOrderBy('l.student', 'DESC')
             ->setParameter(1, $year)
             ->setParameter(2,$month)
+            ->setParameter(3,$teacher)
             ->getQuery()
             ->getResult();
     }

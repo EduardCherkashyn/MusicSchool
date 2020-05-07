@@ -145,7 +145,7 @@ class Lesson
         return $this->mark;
     }
 
-    public function setMark(int $mark): self
+    public function setMark(?int $mark): self
     {
         $this->mark = $mark;
 

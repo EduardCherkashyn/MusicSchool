@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вчитель{% endblock %}
+
+{% block body %}
+    <div class="container pt-3">
+        <h1>Вчитель</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ teacher.id }}</td>
+                </tr>
+                <tr>
+                    <th>Ім'я</th>
+                    <td>{{ teacher.name }}</td>
+                </tr>
+                <tr>
+                    <th>Тип</th>
+                    <td>{{ teacher.type }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('teacher_index') }}"  class="btn btn-primary">до списку</a>
+
+        <a href="{{ path('teacher_edit', {'id': teacher.id}) }}" class="btn btn-warning">редагувати</a>
+
+        {{ include('teacher/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

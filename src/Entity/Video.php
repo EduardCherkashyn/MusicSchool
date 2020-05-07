@@ -21,6 +21,12 @@ class Video
      */
     private $link;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="videos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $teacher;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +40,18 @@ class Video
     public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }
