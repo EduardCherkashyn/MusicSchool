@@ -12,14 +12,14 @@
           {% if student.avatar is null%}
                 <img  class="mb-3" src="{{ asset('avatars/no-avatar-300x300.png') }}" width="200px" height="200px" >
           {% else %}
-                <img class="mb-3" src="{{ asset('avatars/' ~ avatar) }}" width="200px" height="200px" >
+                <img class="mb-3" src="{{ student.avatar }}" width="200px" height="200px" >
           {% endif %}
           <a href="{{ path('studentScore',({'id':student.id})) }}" class="btn btn-primary  btn-block" role="button">Успішність учня</a>
           {{form_start(edit_form)}}
           {{ form_row(edit_form.name) }}
           {{ form_row(edit_form.email) }}
       {{ form_row(edit_form.phone) }}
-          {{ form_row(edit_form.avatar) }}
+          {{ form_row(edit_form.photo) }}
           <h2>Перший урок:</h2>
       {{ form_row(edit_form.lessons.0,{'attr':{'class':'lesson'}}) }}
       <h2>Другий урок:</h2>

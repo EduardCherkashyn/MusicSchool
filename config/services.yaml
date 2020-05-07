@@ -36,3 +36,7 @@ services:
             $targetDirectory: '%avatars_directory%'
             $assetDirectory: '%assets_directory%'
             $photosDirectory: '%photos_directory%'
+    App\Services\AmazonService:
+        arguments:
+            $access_key: '%env(ACCESS_KEY)%'
+            $private_key: '%env(SECRET_KEY)%'

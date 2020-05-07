@@ -16,13 +16,10 @@ use App\Entity\YoutubeLink;
 use App\Form\StudentType;
 use App\Repository\LessonRepository;
 use App\Repository\StudentRepository;
-use App\Services\FileUploader;
+use App\Services\AmazonService;
 use App\Services\PasswordEditing;
 use App\Services\UrlParser;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +35,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/admin/newStudent", name="addStudent")
      */
-    public function addAction(Request $request, FileUploader $fileUploader,UserPasswordEncoderInterface $passwordEncoder)
+    public function addAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, AmazonService $amazonService)
     {
         $student = new Student();
         $lesson = new ScheduleLesson();
@@ -48,12 +45,14 @@ class StudentController extends AbstractController
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
-            $file = $request->files->get('student')['avatar'];
-            $fileName = $fileUploader->upload($file);
-            $student->setAvatar($fileName);
+            /** @var UploadedFile $file */
+            $file = $request->files->get('student')['photo'];
+            $result = $amazonService->uploadAvatar(
+                file_get_contents($_FILES['student']['tmp_name']['photo']),
+                md5(uniqid()).'.'.$file->guessExtension(),
+                $file->guessExtension()
+            );
+            $student->setAvatar($result['ObjectURL']);
             $user = new User();
             $user->setEmail($student->getEmail());
             $user->setPassword($passwordEncoder->encodePassword($user,$student->getPhone()));
@@ -75,10 +74,11 @@ class StudentController extends AbstractController
     /**
      * @Route("/admin/delete/{id}", name="deleteStudent")
      */
-    public function deleteAction(Student $student)
+    public function deleteAction(Student $student, AmazonService $amazonService)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['student'=> $student->getId()]);
+        $amazonService->deleteAvatar($student->getAvatar());
         $em->remove($user);
         $em->remove($student);
         $em->flush();
@@ -89,31 +89,21 @@ class StudentController extends AbstractController
     /**
      * @Route("/admin/edit/{id}", name="editStudent")
      */
-    public function editAction(Student $student, Request $request, FileUploader $fileUploader, Filesystem $filesystem, ContainerInterface $container, PasswordEditing $passwordEditing)
+    public function editAction(Student $student, Request $request, PasswordEditing $passwordEditing, AmazonService $amazonService)
     {
-        $avatar = $student->getAvatar();
-        if($avatar != null) {
-            $student->setAvatar(
-                new File($this->getParameter('avatars_directory') .'/'.$avatar)
-            );
-        }
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
-            $file = $request->files->get('student')['avatar'];
+            /** @var UploadedFile $file */
+            $file = $request->files->get('student')['photo'];
             if($file !== null) {
-                $fileName = $fileUploader->upload($file);
-                $student->setAvatar($fileName);
-                $root = $container->get('kernel')->getProjectDir();
-                if($avatar != null) {
-                    $filesystem->remove($root . '/public/avatars/' . $avatar);
-                }
-            }
-            else{
-                $student->setAvatar($avatar);
+                $amazonService->deleteAvatar($student->getAvatar());
+                $result = $amazonService->uploadAvatar(
+                    file_get_contents($_FILES['student']['tmp_name']['photo']),
+                    md5(uniqid()).'.'.$file->guessExtension(),
+                    $file->guessExtension()
+                );
+                $student->setAvatar($result['ObjectURL']);
             }
             $passwordEditing->check($student);
             $em = $this->getDoctrine()->getManager();
@@ -126,7 +116,6 @@ class StudentController extends AbstractController
         return $this->render('StudentController/EditStudentForm.html.twig', [
             'edit_form' => $form->createView(),
             'student' => $student,
-            'avatar' => $avatar
         ]);
     }
 

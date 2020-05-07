@@ -19,7 +19,8 @@ class StudentType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Ім\'я:'
             ])
-            ->add('avatar',FileType::class,[
+            ->add('photo',FileType::class,[
+                'mapped' => false,
                 'required' => false,
                 'label' => 'Аватар:'
             ])

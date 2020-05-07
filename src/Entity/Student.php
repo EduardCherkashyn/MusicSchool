@@ -50,7 +50,6 @@ class Student
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File
      */
     private $avatar;
 
