@@ -18,7 +18,7 @@
         {% for photo in photos %}
             <tr>
                 <td>{{ photo.id }}</td>
-                <td><img class="ml-2 mb-2" width="200px" height="200px" src="{{ asset('photos/'~  photo.path ) }}"></td>
+                <td><img class="ml-2 mb-2" width="200px" height="200px" src="{{photo.path}}"></td>
                 <td>
                     {{ include('photo/_delete_form.html.twig') }}
                 </td>

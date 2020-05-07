@@ -43,9 +43,9 @@ class FileController extends AbstractController
              * @var UploadedFile $asset
              */
             $asset = $request->files->get('file')['path'];
-            if($file !== null) {
+            if($asset !== null) {
                 $result = $amazonService->upload(
-                    'assets',
+                    'assets/'.$this->getUser()->getTeacher()->getName(),
                     file_get_contents($_FILES['file']['tmp_name']['path']),
                     md5(uniqid()).'.'.$asset->guessExtension(),
                     'application/'.$asset->guessExtension()
@@ -96,13 +96,10 @@ class FileController extends AbstractController
     /**
      * @Route("/{id}", name="file_delete", methods="DELETE")
      */
-    public function delete(Request $request, File $file): Response
+    public function delete(Request $request, File $file, AmazonService $amazonService): Response
     {
         if ($this->isCsrfTokenValid('delete'.$file->getId(), $request->request->get('_token'))) {
-            $filesystem = new Filesystem();
-            if ($filesystem->exists('assets/'.$file->getPath())){
-                $filesystem->remove('assets/'.$file->getPath());
-            }
+            $amazonService->delete($file->getPath());
             $em = $this->getDoctrine()->getManager();
             $em->remove($file);
             $em->flush();

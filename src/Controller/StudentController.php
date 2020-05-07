@@ -49,7 +49,7 @@ class StudentController extends AbstractController
             /** @var UploadedFile $file */
             $file = $request->files->get('student')['photo'];
             $result = $amazonService->upload(
-                'avatars',
+                'avatars'.$this->getUser()->getTeacher()->getName(),
                 file_get_contents($_FILES['student']['tmp_name']['photo']),
                 md5(uniqid()).'.'.$file->guessExtension(),
                 'image/'.$file->guessExtension()
@@ -101,7 +101,7 @@ class StudentController extends AbstractController
             if($file !== null) {
                 $amazonService->delete($student->getAvatar());
                 $result = $amazonService->upload(
-                    'avatars',
+                    'avatars/'.$this->getUser()->getTeacher()->getName(),
                     file_get_contents($_FILES['student']['tmp_name']['photo']),
                     md5(uniqid()).'.'.$file->guessExtension(),
                     'image/'.$file->guessExtension()

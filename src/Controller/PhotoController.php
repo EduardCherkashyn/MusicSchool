@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Photo;
 use App\Form\PhotoType;
 use App\Repository\PhotoRepository;
+use App\Services\AmazonService;
 use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
@@ -29,7 +30,7 @@ class PhotoController extends AbstractController
     /**
      * @Route("/new", name="photo_new", methods="GET|POST")
      */
-    public function new(Request $request, FileUploader $fileUploader): Response
+    public function new(Request $request, AmazonService $amazonService): Response
     {
         $photo = new Photo();
         $photo->setTeacher($this->getUser()->getTeacher());
@@ -41,8 +42,15 @@ class PhotoController extends AbstractController
              * @var UploadedFile $asset
              */
             $asset = $request->files->get('photo')['path'];
-            $fileName = $fileUploader->uploadPhoto($asset);
-            $photo->setPath($fileName);
+            if($asset !== null) {
+                $result = $amazonService->upload(
+                    'photos/'.$this->getUser()->getTeacher()->getName(),
+                    file_get_contents($_FILES['photo']['tmp_name']['path']),
+                    md5(uniqid()).'.'.$asset->guessExtension(),
+                    'image/'.$asset->guessExtension()
+                );
+                $photo->setPath($result['ObjectURL']);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($photo);
             $em->flush();
@@ -59,13 +67,10 @@ class PhotoController extends AbstractController
     /**
      * @Route("/{id}", name="photo_delete", methods="DELETE")
      */
-    public function delete(Request $request, Photo $photo): Response
+    public function delete(Request $request, Photo $photo, AmazonService $amazonService): Response
     {
         if ($this->isCsrfTokenValid('delete'.$photo->getId(), $request->request->get('_token'))) {
-            $filesystem = new Filesystem();
-            if ($filesystem->exists('photos/'.$photo->getPath())){
-                $filesystem->remove('photos/'.$photo->getPath());
-            }
+            $amazonService->delete($photo->getPath());
             $em = $this->getDoctrine()->getManager();
             $em->remove($photo);
             $em->flush();
