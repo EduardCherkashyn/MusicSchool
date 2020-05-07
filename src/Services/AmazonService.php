@@ -21,13 +21,13 @@ class AmazonService
 
     }
 
-    public function uploadAvatar($image, $name , $extension)
+    public function upload(string $type, $image, $name , string $contentType)
     {
         $result = $this->s3->putObject([
             'Bucket' => 'eduardcherkashyn',
-            'Key'    => 'music_school/avatars/'.$name,
+            'Key'    => 'music_school/'.$type.'/'.$name,
             'Body'   => $image,
-            'ContentType' => 'image/'.$extension,
+            'ContentType' => $contentType,
             'ACL'    => 'public-read',
 
         ]);
@@ -35,7 +35,7 @@ class AmazonService
         return $result;
     }
 
-    public function deleteAvatar($keyname)
+    public function delete($keyname)
     {
          $key = str_replace('https://eduardcherkashyn.s3.eu-north-1.amazonaws.com/','',$keyname);
          $this->s3->deleteObject([

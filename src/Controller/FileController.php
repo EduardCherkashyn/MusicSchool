@@ -6,6 +6,7 @@ use App\Entity\File;
 use App\Form\FileEditType;
 use App\Form\FileType;
 use App\Repository\FileRepository;
+use App\Services\AmazonService;
 use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,7 +31,7 @@ class FileController extends AbstractController
     /**
      * @Route("/new", name="file_new", methods="GET|POST")
      */
-    public function new(Request $request, FileUploader $fileUploader): Response
+    public function new(Request $request, AmazonService $amazonService): Response
     {
         $file = new File();
         $form = $this->createForm(FileType::class, $file);
@@ -41,8 +42,15 @@ class FileController extends AbstractController
              * @var UploadedFile $asset
              */
             $asset = $request->files->get('file')['path'];
-            $fileName = $fileUploader->uploadAsset($asset);
-            $file->setPath($fileName);
+            if($file !== null) {
+                $result = $amazonService->upload(
+                    'assets',
+                    file_get_contents($_FILES['file']['tmp_name']['path']),
+                    md5(uniqid()).'.'.$asset->guessExtension(),
+                    'application/'.$asset->guessExtension()
+                );
+                $file->setPath($result['ObjectURL']);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
             $em->flush();

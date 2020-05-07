@@ -47,10 +47,11 @@ class StudentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
             $file = $request->files->get('student')['photo'];
-            $result = $amazonService->uploadAvatar(
+            $result = $amazonService->upload(
+                'avatars',
                 file_get_contents($_FILES['student']['tmp_name']['photo']),
                 md5(uniqid()).'.'.$file->guessExtension(),
-                $file->guessExtension()
+                'image/'.$file->guessExtension()
             );
             $student->setAvatar($result['ObjectURL']);
             $user = new User();
@@ -78,7 +79,7 @@ class StudentController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['student'=> $student->getId()]);
-        $amazonService->deleteAvatar($student->getAvatar());
+        $amazonService->delete($student->getAvatar());
         $em->remove($user);
         $em->remove($student);
         $em->flush();
@@ -97,11 +98,12 @@ class StudentController extends AbstractController
             /** @var UploadedFile $file */
             $file = $request->files->get('student')['photo'];
             if($file !== null) {
-                $amazonService->deleteAvatar($student->getAvatar());
-                $result = $amazonService->uploadAvatar(
+                $amazonService->delete($student->getAvatar());
+                $result = $amazonService->upload(
+                    'avatars',
                     file_get_contents($_FILES['student']['tmp_name']['photo']),
                     md5(uniqid()).'.'.$file->guessExtension(),
-                    $file->guessExtension()
+                    'image/'.$file->guessExtension()
                 );
                 $student->setAvatar($result['ObjectURL']);
             }
