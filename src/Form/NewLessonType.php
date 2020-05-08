@@ -7,7 +7,9 @@ use App\Entity\Lesson;
 use App\Entity\Student;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,6 +42,19 @@ class NewLessonType extends AbstractType
                       $result->format('d-m-Y') => $result
                 ],
                 'label'=>'Дата:'
+            ])
+            ->add('select_date',CheckboxType::class,[
+                'required' => false,
+                'label' => 'Обрати дату самостійно:',
+                'mapped' => false,
+                'attr' => [
+                    'id' => 'select_date'
+                ]
+            ])
+            ->add('manual_date',DateType::class,[
+                'mapped' => false,
+                'label' => false,
+                'years' => range(date('Y'), date('Y') + 1 )
             ])
             ->add('files',  EntityType::class,[
                 'class' => File::class,
