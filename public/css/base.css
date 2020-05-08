@@ -4,11 +4,12 @@
 }
 *{
 font-family: 'myFont', sans-serif!important;
+    color: white;
 }
 
-.container{
-background-color: #E6E6FA;
-}
+/*.container-fluid{*/
+/*background-color: #E6E6FA;*/
+/*}*/
 td, th {
 border-bottom: 3px solid #4B0082 !important;
 }
