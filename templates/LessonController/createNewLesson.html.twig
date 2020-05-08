@@ -14,3 +14,24 @@
     {{ form_end(create_lesson) }}
     </div>
 {% endblock %}
+{%  block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $("#new_lesson_manual_date").hide();
+            $("#new_lesson_select_date").click(function()
+            {
+                if($("#new_lesson_select_date").is(':checked')){
+                    $('label[for="new_lesson_date"]').hide();
+                    $("#new_lesson_date").hide();
+                    $("#new_lesson_manual_date").show();
+               } else{
+                    $('label[for="new_lesson_date"]').show();
+                    $("#new_lesson_date").show();
+                    $("#new_lesson_manual_date").hide();
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
