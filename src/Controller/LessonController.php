@@ -57,6 +57,9 @@ class LessonController extends AbstractController
         $form = $this->createForm(NewLessonType::class, $lesson, ['data' => $lesson]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form['select_date']->getData() === true){
+                $lesson->setDate($form['manual_date']->getData());
+            }
             $student->addLessonsArchive($lesson);
             $files = $form['files']->getData();
             /** @var File $file */
