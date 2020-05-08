@@ -16,17 +16,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Security;
 
 class FilterType extends AbstractType
 {
-    private $security;
-
-    public function __construct(Security $security)
-    {
-    $this->security = $security;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     $builder
@@ -39,9 +31,7 @@ class FilterType extends AbstractType
             'choice_label' => 'name',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('s')
-                    ->andWhere('s.teacher = ?1')
-                    ->orderBy('s.name', 'ASC')
-                    ->setParameter('1',$this->security->getUser()->getTeacher());
+                    ->orderBy('s.name', 'ASC');
             }
         ])
     ;
