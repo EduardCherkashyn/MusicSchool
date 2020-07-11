@@ -24,7 +24,7 @@ class LessonCrudController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator, LessonRepository $lessonRepository): Response
     {
-        if($student = $request->request->get('filter')['student']){
+        if ($student = $request->query->get('id')) {
             $pagination = $paginator->paginate(
                 $lessonRepository->getStudentLesson($student), /* query NOT result */
                 $request->query->getInt('page', 1),
@@ -40,7 +40,11 @@ class LessonCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->redirectToRoute('lesson_index');
+            $data = [];
+            if ($student = $form->get('student')->getData()) {
+              $data['id'] = $student->getId();
+            }
+            return $this->redirectToRoute('lesson_index', $data);
         }
         return $this->render('lesson/index.html.twig', [
             'lessons' => $pagination,
