@@ -20,7 +20,7 @@ class Lesson
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessonsArchive", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessonsArchive", cascade={"remove"})
      * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
     private $student;
@@ -69,12 +69,12 @@ class Lesson
     private $markComment;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\File", mappedBy="lessons")
+     * @ORM\ManyToMany(targetEntity="App\Entity\File", mappedBy="lessons", orphanRemoval=true)
      */
     private $files;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\YoutubeLink", mappedBy="lesson_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\YoutubeLink", mappedBy="lesson_id", orphanRemoval=true)
      */
     private $youtubeLinks;
 

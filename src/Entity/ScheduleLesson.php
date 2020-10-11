@@ -31,7 +31,7 @@ class ScheduleLesson
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessons", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="lessons", cascade={"remove"})
      * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
     private $student;
